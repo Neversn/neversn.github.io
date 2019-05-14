@@ -62,13 +62,19 @@ hexo new post title
 
 ![scaffold](2019-05-14-build_blog_diary/scaffold.PNG)
 
-- 有title 后，不能有以井号\#开头的一级标题
+
+
 - 引用文件通过相对目录引用
 - [hexo博客添加图片][6]
 
 ### 成果
 
 ![1557835573394](2019-05-14-build_blog_diary/1557835573394.png)
+### 遗留问题
+
+- 无法访问图片
+
+
 
 ----
 
