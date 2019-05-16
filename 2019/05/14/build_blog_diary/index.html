@@ -104,16 +104,16 @@
 <meta property="og:site_name" content="Neversn&#39;Blog">
 <meta property="og:description" content="blog搭建日记Day 1gitpage 初步尝试参考： gitpage官方介绍 个人理解，gitpage应该是github 提供的静态网页托管服务，他和git仓库的某个分支绑定，自动部署。  创建username.github.io 为名的仓库  向master分支提交任意内容，此时，gitpage自动绑定好了，通过usename.github.io即可访问，访问效果如下：    notice">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557755944810.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557759138571.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/scaffold.PNG">
-<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557835573394.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/next_layout.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/1557755944810.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/1557759138571.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/scaffold.PNG">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/1557835573394.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/14/build_blog_diary/next_layout.png">
 <meta property="og:updated_time" content="2019-05-16T13:13:51.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="build_blog_diary">
 <meta name="twitter:description" content="blog搭建日记Day 1gitpage 初步尝试参考： gitpage官方介绍 个人理解，gitpage应该是github 提供的静态网页托管服务，他和git仓库的某个分支绑定，自动部署。  创建username.github.io 为名的仓库  向master分支提交任意内容，此时，gitpage自动绑定好了，通过usename.github.io即可访问，访问效果如下：    notice">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557755944810.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/14/build_blog_diary/1557755944810.png">
 
 
 
@@ -400,7 +400,7 @@
 <li><p>创建username.github.io 为名的仓库</p>
 </li>
 <li><p>向master分支提交任意内容，此时，gitpage自动绑定好了，通过usename.github.io即可访问，访问效果如下：</p>
-<p><img src="/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557755944810.png" alt="1557755944810"></p>
+<p><img src="/2019/05/14/build_blog_diary/1557755944810.png" alt="1557755944810"></p>
 </li>
 </ul>
 <h4 id="notice"><a href="#notice" class="headerlink" title="notice"></a>notice</h4><ul>
@@ -414,19 +414,19 @@
 <li>需要执行hexo deploy 前， 需要配置_config.yml 中的deploy项。</li>
 </ul>
 <h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>按着教程按部就班，使得<a href="https://neversn.github.io/" target="_blank" rel="noopener">个人主页</a>可以访问了。</p>
-<p><img src="/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557759138571.png" alt="1557759138571"></p>
+<p><img src="/2019/05/14/build_blog_diary/1557759138571.png" alt="1557759138571"></p>
 <h2 id="Day-2"><a href="#Day-2" class="headerlink" title="Day 2"></a>Day 2</h2><h3 id="更换主题：nexT"><a href="#更换主题：nexT" class="headerlink" title="更换主题：nexT"></a>更换主题：nexT</h3><p><a href="https://theme-next.org/docs/getting-started/" target="_blank" rel="noopener">NexT User Docs – Starting to Use</a></p>
 <ul>
 <li>更改language:  后， 重启生效</li>
 </ul>
 <h3 id="新建post（博文）"><a href="#新建post（博文）" class="headerlink" title="新建post（博文）"></a>新建post（博文）</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post title</span><br></pre></td></tr></table></figure>
 <p>本质上是在hexo/source/_post/ 目录下创建了一个 *.md 文件， 文件中包含scaffolds中模板信息，如下，在此基础上继续编辑即可：</p>
-<p><img src="/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/scaffold.PNG" alt="scaffold"></p>
+<p><img src="/2019/05/14/build_blog_diary/scaffold.PNG" alt="scaffold"></p>
 <ul>
 <li>引用文件通过相对目录引用</li>
 <li><a href="https://www.jianshu.com/p/cf0628478a4e" target="_blank" rel="noopener">hexo博客添加图片</a> : 通过使用 hexo-asset-image插件实现mardowm文章内图片链接在生成静态页面时的映射</li>
 </ul>
-<h3 id="成果-1"><a href="#成果-1" class="headerlink" title="成果"></a>成果</h3><p><img src="/2019/05/14/build_blog_diary/2019-05-14-build_blog_diary/1557835573394.png" alt="1557835573394"></p>
+<h3 id="成果-1"><a href="#成果-1" class="headerlink" title="成果"></a>成果</h3><p><img src="/2019/05/14/build_blog_diary/1557835573394.png" alt="1557835573394"></p>
 <h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
 <li>无法访问图片</li>
 </ul>
@@ -453,7 +453,7 @@
 </ul>
 <h3 id="增加标签页和分类页"><a href="#增加标签页和分类页" class="headerlink" title="增加标签页和分类页"></a>增加标签页和分类页</h3><ol>
 <li><p>查看hexo/theme/next/layout 目录内容,可以看到，其已经内置多种页面布局：</p>
-<p><img src="/2019/05/14/build_blog_diary/./2019-05-14-build_blog_diary/next_layout.png" alt="next_layout"></p>
+<p><img src="/2019/05/14/build_blog_diary/next_layout.png" alt="next_layout"></p>
 </li>
 <li></li>
 </ol>
