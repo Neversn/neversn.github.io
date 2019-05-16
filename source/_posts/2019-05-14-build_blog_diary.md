@@ -162,11 +162,13 @@ hexo new post title
 
    3. 编辑hexo_root/source/categories/index.md 和 hexo_root/source/tags/index.md，加上type描述，此时标签页和分类页生效。
 
-      ![categories_index_md](2019-05-14-build_blog_diary/categories_index_md.png)
+      ![	categories_index_md](2019-05-14-build_blog_diary/categories_index_md.png)
 
    4. 以后的所有md文章，在文件开头加上Front-matter即可正确分类和打标签。[Front-matter格式说明](https://hexo.io/zh-cn/docs/front-matter.html#%E5%88%86%E7%B1%BB%E5%92%8C%E6%A0%87%E7%AD%BE)
 
+### notice
 
+- 注意引用文件后缀大小写，Typora中大小写不敏感，静态页面中大小写敏感
 
 ----
 
