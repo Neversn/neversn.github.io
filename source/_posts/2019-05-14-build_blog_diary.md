@@ -1,8 +1,15 @@
 ---
 title: build_blog_diary
 date: 2019-05-14 23:09:00
-tags: 日记 blog gitpage hexo nexTDAY 01
-
+tags: 
+- 日记 
+- blog 
+- gitpage 
+- hexo 
+- nexT
+categories: 
+- 流水笔记 
+- blog搭建
 ---
 
 # blog搭建日记
@@ -106,7 +113,7 @@ hexo new post title
 
 ### hexo-asset-image 插件 本地 静态页面 插画图片统一问题
 
-- 分析Day 3遗留问题，查看[hexo-asset-image插件源码](https://github.com/xcodebuild/hexo-asset-image/blob/master/index.js):
+- 分析Day 3遗留问题，查看最新[hexo-asset-image插件源码](https://github.com/xcodebuild/hexo-asset-image/blob/master/index.js):
 
   ```javascript
   ....
@@ -122,13 +129,44 @@ hexo new post title
 
   发现，插件将原文章中图片引用链接移除了第一个/ 及之前的内容。故相对路径引用**不应**使用 \[\]\(./title/A.png\) 而**应该**使用  \[\]\(tiltle/A.png\)
 
+- 直接安装的hexo-asset-image插件不对，使用github上[xcodebuild](https://github.com/xcodebuild)的。
+
+  ```sh
+  npm uninstall hexo-asset-image
+  npm install https://github.com/xcodebuild/hexo-asset-image --save
+  ```
+
 ### 增加标签页和分类页
+
+[详细教程](http://theme-next.iissnan.com/theme-settings.html)
 
 1. 查看hexo/theme/next/layout 目录内容,可以看到，其已经内置多种页面布局：
 
-   ![next_layout](./2019-05-14-build_blog_diary/next_layout.png)
+   ![next_layout](2019-05-14-build_blog_diary/next_layout.png)
 
-2. 
+2. 新建分类页标签页
+
+   1. 执行以下命令后, source 目录下就会多source/categories/
+      source/tags/两个目录，但此时页面菜单中上未多出新的选项
+
+      ```sh
+      hexo new page tags
+      hexo new page categories
+      ```
+
+   2. 将 hexo_root/theme/next/_config.yml 中menu选项对应注释去除，注释去除后，刚建立的页面显示出来了,但此时，标签页和分类页中啥都没有。
+
+      ![theme_menu_conf](2019-05-14-build_blog_diary/theme_menu_config.png)
+
+      ![new_menu](2019-05-14-build_blog_diary/new_menu.png)
+
+   3. 编辑hexo_root/source/categories/index.md 和 hexo_root/source/tags/index.md，加上type描述，此时标签页和分类页生效。
+
+      ![categories_index_md](2019-05-14-build_blog_diary/categories_index_md.png)
+
+   4. 以后的所有md文章，在文件开头加上Front-matter即可正确分类和打标签。[Front-matter格式说明](https://hexo.io/zh-cn/docs/front-matter.html#%E5%88%86%E7%B1%BB%E5%92%8C%E6%A0%87%E7%AD%BE)
+
+
 
 ----
 
