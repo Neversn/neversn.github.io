@@ -67,7 +67,7 @@ hexo new post title
 
 本质上是在hexo/source/_post/ 目录下创建了一个 *.md 文件， 文件中包含scaffolds中模板信息，如下，在此基础上继续编辑即可：
 
-![scaffold](2019-05-14-build_blog_diary/scaffold.PNG)
+![scaffold](2019-05-14-build_blog_diary/scaffold.png)
 
 
 
