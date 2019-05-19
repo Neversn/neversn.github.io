@@ -9,7 +9,6 @@ tags:
 - nexT
 categories: 
 - 流水笔记 
-
 ---
 
 # blog搭建日记
@@ -179,6 +178,12 @@ hexo new post title
 - hexo deploy 部署时也会往github上提交东西，在window环境下，也是文件名大小写不敏感，只改变文件名时不会当成change push到仓库的，此时需要更改 hexo_root/.deploy_git/.git/config 中的 ignorecase 选项。
 
   ![hexo_git_config](2019-05-14-build_blog_diary/hexo_git_config.png)
+
+## Day 5
+
+### 绑定域名
+
+
 
 ----
 
