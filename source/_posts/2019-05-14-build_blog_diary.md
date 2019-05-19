@@ -170,6 +170,16 @@ hexo new post title
 
 - 注意引用文件后缀大小写，Typora中大小写不敏感，静态页面中大小写敏感
 
+- 由于window和mac文件系统对文件大小写不敏感，因此git默认也是不敏感的，如果要制定git大小写敏感，需要执行：
+
+  ```sh
+  git config core.ignorecase false
+  ```
+
+- hexo deploy 部署时也会往github上提交东西，在window环境下，也是文件名大小写不敏感，只改变文件名时不会当成change push到仓库的，此时需要更改 hexo_root/.deploy_git/.git/config 中的 ignorecase 选项。
+
+  ![hexo_git_config](2019-05-14-build_blog_diary/hexo_git_config.png)
+
 ----
 
 ***参考资料***
