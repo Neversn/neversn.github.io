@@ -39,3 +39,7 @@ categories:
 
 ![twosum](2019-05-19-leetcode-env/twosum.png)
 
+## 使用效果
+
+![example](2019-05-19-leetcode-env/example.png)
+
