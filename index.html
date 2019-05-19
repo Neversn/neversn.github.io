@@ -536,7 +536,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-17 00:07:17" itemprop="dateModified" datetime="2019-05-17T00:07:17+08:00">2019-05-17</time>
+                <time title="修改时间：2019-05-19 12:16:01" itemprop="dateModified" datetime="2019-05-19T12:16:01+08:00">2019-05-19</time>
               
             
           </span>
@@ -680,7 +680,14 @@
 </li>
 </ol>
 <h3 id="notice-2"><a href="#notice-2" class="headerlink" title="notice"></a>notice</h3><ul>
-<li>注意引用文件后缀大小写，Typora中大小写不敏感，静态页面中大小写敏感</li>
+<li><p>注意引用文件后缀大小写，Typora中大小写不敏感，静态页面中大小写敏感</p>
+</li>
+<li><p>由于window和mac文件系统对文件大小写不敏感，因此git默认也是不敏感的，如果要制定git大小写敏感，需要执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config core.ignorecase <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hexo deploy 部署时也会往github上提交东西，在window环境下，也是文件名大小写不敏感，只改变文件名时不会当成change push到仓库的，此时需要更改 hexo_root/.deploy_git/.git/config 中的 ignorecase 选项。</p>
+<p><img src="/2019/05/14/build_blog_diary/hexo_git_config.png" alt="hexo_git_config"></p>
+</li>
 </ul>
 <hr>
 <p><strong><em>参考资料</em></strong></p>
