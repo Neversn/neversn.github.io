@@ -14,8 +14,10 @@ tags:
 # 安卓仿真环境
 
 ## 仿linux终端——Termux
-［较全的配置教程］(https://www.sqlsec.com/2018/05/termux.html)
-​	- 切换国内源
+[较全的配置教程](https://www.sqlsec.com/2018/05/termux.html)
+
+	- 切换国内源
+
 ```sh
 export EDITOR＝vi
 apt edit-sources
