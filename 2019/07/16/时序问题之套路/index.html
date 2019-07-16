@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="时序问题的一般套路时序问题传统分析流程机器学习之时间序列分析一般思路  先进行纯随机检测、平稳性分析 若不平稳，差分处理 建立模型 模型检测  时序平稳性 严格平稳（强平稳）序列截取任意长度，其联合分布与时间无关。 弱平稳相关系数只与时间差有关  严格平稳 弱平稳 知乎问题时序平稳性 知乎问题  平稳的基本思想是：时间序列的行为并不随时间改变。   一般而言，时间序列被看作一个随机过程{Xt}，随">
+<meta name="keywords" content="time series,时间序列,AR,MA,ARMA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时序问题的一般套路">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/时序问题之套路/index.html">
+<meta property="og:site_name" content="Neversn&#39;Blog">
+<meta property="og:description" content="时序问题的一般套路时序问题传统分析流程机器学习之时间序列分析一般思路  先进行纯随机检测、平稳性分析 若不平稳，差分处理 建立模型 模型检测  时序平稳性 严格平稳（强平稳）序列截取任意长度，其联合分布与时间无关。 弱平稳相关系数只与时间差有关  严格平稳 弱平稳 知乎问题时序平稳性 知乎问题  平稳的基本思想是：时间序列的行为并不随时间改变。   一般而言，时间序列被看作一个随机过程{Xt}，随">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-16T12:28:32.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时序问题的一般套路">
+<meta name="twitter:description" content="时序问题的一般套路时序问题传统分析流程机器学习之时间序列分析一般思路  先进行纯随机检测、平稳性分析 若不平稳，差分处理 建立模型 模型检测  时序平稳性 严格平稳（强平稳）序列截取任意长度，其联合分布与时间无关。 弱平稳相关系数只与时间差有关  严格平稳 弱平稳 知乎问题时序平稳性 知乎问题  平稳的基本思想是：时间序列的行为并不随时间改变。   一般而言，时间序列被看作一个随机过程{Xt}，随">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/16/时序问题之套路/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>时序问题的一般套路 | Neversn'Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Neversn'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Do or Die...</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/时序问题之套路/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neversn">
+      <meta itemprop="description" content="Never say never...">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neversn'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">时序问题的一般套路
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-16 00:00:00 / 修改时间：20:28:32" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Data-Mining/" itemprop="url" rel="index"><span itemprop="name">Data Mining</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Data-Mining/Time-Series/" itemprop="url" rel="index"><span itemprop="name">Time Series</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="时序问题的一般套路"><a href="#时序问题的一般套路" class="headerlink" title="时序问题的一般套路"></a>时序问题的一般套路</h1><h2 id="时序问题传统分析流程"><a href="#时序问题传统分析流程" class="headerlink" title="时序问题传统分析流程"></a>时序问题传统分析流程</h2><p><a href="https://www.jianshu.com/p/6ead565b34e4" target="_blank" rel="noopener">机器学习之时间序列分析一般思路</a></p>
+<ol>
+<li>先进行纯随机检测、平稳性分析</li>
+<li>若不平稳，差分处理</li>
+<li>建立模型</li>
+<li>模型检测</li>
+</ol>
+<h3 id="时序平稳性"><a href="#时序平稳性" class="headerlink" title="时序平稳性"></a>时序平稳性</h3><ul>
+<li>严格平稳（强平稳）<br>序列截取任意长度，其联合分布与时间无关。</li>
+<li>弱平稳<br>相关系数只与时间差有关</li>
+</ul>
+<p><a href="https://www.zhihu.com/question/29128649?sort=created" target="_blank" rel="noopener">严格平稳 弱平稳 知乎问题</a><br><a href="https://www.zhihu.com/question/21982358" target="_blank" rel="noopener">时序平稳性 知乎问题</a></p>
+<blockquote>
+<p>平稳的基本思想是：时间序列的行为并不随时间改变。</p>
+</blockquote>
+<blockquote>
+<p>一般而言，时间序列被看作一个随机过程{Xt}，随机过程是啥，就是一列随机变量，在离散情况下比如我取前n个就是X1 X2 X3。。。。Xn是个n维随机变量。随机变量总学过吧，给你个随机变量Xi他的期望方差啊分布是什么之类的就是我们想要研究的。严平稳：多元分布保持不变。（X1,X2,X3)是个三维随机变量，（X3,X4,X5)也是个三维随机变量，严格平稳表示任何形如（Xn-1,Xn,Xn+1)的三维随机变量分布都是一样的。当然不仅仅是三维，而是任何维的随机变量分布不变。<strong>严平稳表示的分布不随时间的改变而改变</strong>。我研究第1到第n个随机变量跟第2到第n+1个随机变量性质是一样的。最简单的例子，白噪声（正态），无论怎么取，都是期望为0，方差为1，协方差都为0的n维正态分布。弱平稳：首先要有个平稳的改变，别有啥趋势，所以任何一点t，Xt的期望是常数（通常我们让他为0），弱平稳没有分布不于时间无关这个性质，但是弱平稳抓住了另一个不变性——相关系数。这说明什么，X1于X3的相关系数， X2与X4的相关系数都是一样的，也就是 说相关系数取决于时间间隔而非时间起始点。这个东西很有用啊，你做回归是研究Y依赖于X的关系，可是单一时间序列只有X没有Y啊，未来某时刻的t的值Xt就要依赖于它的过去信息吧，如果没有依赖性，那这模型没法做了，如果有，跟前几期数据有关系？比如Xt-1 Xt-2能提供预测Xt的信息，那么这个他们的依赖关系又如何？如果是弱平稳的，这个关系还可能是一致的，否则不同的时间t，Xt与Xt-1 Xt-2的关系不统一，我们还建模个毛线啊？通常情况下时间序列分析讨论的是弱平稳序列。题主说熟悉回归，那回归中异方差，多重共线性等问题怎么解决？同样，时间序列里你的数据平稳不平稳对你的建模也是至关重要，<strong>弱平稳是许多时间序列模型的假设条件</strong>。<br>作者：亲爱的龙哥<br><a href="https://www.zhihu.com/question/29128649/answer/43723157" target="_blank" rel="noopener">链接</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 </p>
+</blockquote>
+<blockquote>
+<p>对于平稳的定义，还有一点需要补充。一般认为，过滤掉线性趋势、季节性因素后，表现出平稳特征的数据，可以看成某种广义的平稳。</p>
+</blockquote>
+<h4 id="时序平稳性检测手段"><a href="#时序平稳性检测手段" class="headerlink" title="时序平稳性检测手段"></a>时序平稳性检测手段</h4><h5 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h5><p>一个平稳序列的时间路径图应该是在一个常数附近波动的，切波动范围是有界的。</p>
+<h5 id="ACF"><a href="#ACF" class="headerlink" title="ACF"></a><a href="https://baike.baidu.com/item/%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/9851266" target="_blank" rel="noopener">ACF</a></h5><p>ACF(自相关函数，auto correlation function): 两个随机过程中不同时刻的数值间的皮尔森相关<br>$R(s,t) = \frac{E[(X_s-\mu_s)E[(X_t-\mu_t)]}{\sigma_s\sigma_t}$<br>如果X为广义平稳过程，则的期望$\mu_t$以及标准差$\sigma_t$不随时间t变化，则自相关函数可以表示为时间延迟$\tau$<br>的函数<br>$R(\tau) = \frac{E[(X_t-\mu)E[(X_{t+\tau}-\mu)]}{\sigma_t^2}$</p>
+<p>表示：滞后的数据与自身的相关性</p>
+<h5 id="PACF"><a href="#PACF" class="headerlink" title="PACF"></a>PACF</h5><p><a href="https://www.cnblogs.com/ylxn/p/10750710.html" target="_blank" rel="noopener">自相关系数 ACF与偏自相关系数PACF，拖尾和截尾</a></p>
+<blockquote>
+<p>自相关系数ρ(t,s)并不是只有两个点t和s的数据决定的。而是还包含了t-1 ~ s+1时间段值的影响。而PACF是严格这两个变量之间的相关性。<br>公式很复杂的样子，<a href="https://zhuanlan.zhihu.com/p/26525852" target="_blank" rel="noopener">参考</a></p>
+</blockquote>
+<h5 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h5><blockquote>
+<p>如果偏自相关函数是截尾，而自相关函数是拖尾，则建立AR模型<br>    如果偏自相关函数是拖尾，而自相关函数是截尾，则建立MA模型<br>    如果偏自相关函数和自相关函数都是拖尾，则建立ARMA模型<a href="https://www.jianshu.com/p/6ead565b34e4" target="_blank" rel="noopener">出处</a></p>
+</blockquote>
+<h5 id="ADF"><a href="#ADF" class="headerlink" title="ADF"></a>ADF</h5><p>单位根检验(ADF, Augmented Dickey-Fuller Test)</p>
+<blockquote>
+<p>当单位根存在时，自变量和因变量之间的关系具有欺骗性，因为残差序列的任何误差都不会随着样本量（即时期数）增大而衰减，也就是说模型中的残差的影响是永久的。这种回归又称作伪回归。如果单位根存在，这个过程就是一个随机漫步（random walk）。</p>
+</blockquote>
+<h6 id="ADF原理"><a href="#ADF原理" class="headerlink" title="ADF原理"></a>ADF原理</h6><blockquote>
+<p>ADF检验就是判断序列是否存在单位根：如果序列平稳，就不存在单位根；否则，就会存在单位根。<br>所以，ADF检验的 H0 假设就是存在单位根，如果得到的显著性检验统计量小于三个置信度（10%，5%，1%），则对应有（90%，95，99%）的把握来拒绝原假设。</p>
+</blockquote>
+<h5 id="补充阅读"><a href="#补充阅读" class="headerlink" title="补充阅读"></a>补充阅读</h5><p><a href="https://wenku.baidu.com/view/22d087ef69dc5022aaea008c.html" target="_blank" rel="noopener">单位根的DF、ADF检验与PP检验比较研究</a><br><a href="blog.sina.com.cn/s/blog_4d69f4fe0101hzz7.html">稳性的单位根检验：DF检验、ADF检验、DFGLS检验、PP检验、KPSS检验、ERS检验和NP检验</a></p>
+<h4 id="差分"><a href="#差分" class="headerlink" title="差分"></a><a href="https://baike.baidu.com/item/%E4%B8%80%E9%98%B6%E5%B7%AE%E5%88%86/3937421" target="_blank" rel="noopener">差分</a></h4><p><a href="http://www.atyun.com/4248.html" target="_blank" rel="noopener">各种差分方式</a></p>
+<h5 id="一阶差分"><a href="#一阶差分" class="headerlink" title="一阶差分"></a>一阶差分</h5><p>f(x)在x处的一阶差分$\Delta x$为:</p>
+<p>$$<br>\Delta x = f(x+1)-f(x)<br>$$</p>
+<h4 id="时序模型"><a href="#时序模型" class="headerlink" title="时序模型"></a>时序模型</h4><p><a href="https://blog.csdn.net/fredric_2014/article/details/85340339" target="_blank" rel="noopener">平稳序列建模</a><br><a href="https://wenku.baidu.com/view/97301f2aaeaad1f347933fa2.html" target="_blank" rel="noopener">适用于平稳时序的三种基本模型</a></p>
+<h5 id="AR模型-Autoregressive-Model"><a href="#AR模型-Autoregressive-Model" class="headerlink" title="AR模型(Autoregressive Model)"></a><a href="https://baike.baidu.com/item/%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/1037587" target="_blank" rel="noopener">AR模型</a>(Autoregressive Model)</h5><p>模型理解：X的当前值等于一个或数个落后期的线性组合，加常数项，加随机误差。</p>
+<p>p阶自回归模型</p>
+<p>$$<br>X_t = c + \sum_{i=1}^p \phi_iX_{t-i} + \epsilon_t \<br>$$<br>$其中 c为常数项， \epsilon_t被假设为平均数等于0，标准差等于\sigma的随机误差值(白噪声),\sigma与时间无关$</p>
+<h5 id="MA模型-moving-average-model"><a href="#MA模型-moving-average-model" class="headerlink" title="MA模型(moving average model)"></a><a href="https://baike.baidu.com/item/MA%E6%A8%A1%E5%9E%8B/16688582" target="_blank" rel="noopener">MA模型</a>(moving average model)</h5><p>模型理解：t时刻时序的值等于过去值得均值加上q个时间下<strong>随机误差</strong>的线性组合</p>
+<p>q阶移动平均模型</p>
+<p>$$<br>X_t = \mu +\epsilon_t- \sum_{i=i}^q\theta_i \epsilon_{t-i}<br>$$</p>
+<p>$其中\mu为时间序列的平均数，\epsilon_i 为 模型在t=i处的误差，\theta_i 为待估计参数$</p>
+<h5 id="ARMA模型"><a href="#ARMA模型" class="headerlink" title="ARMA模型"></a>ARMA模型</h5><p>$$<br>X_t = c + \sum_{i=1}^p \phi_iX_{t-i} +\epsilon_t-  \sum_{i=i}^q\theta_i \epsilon_{t-i}<br>$$</p>
+<p>ARMA 模型是 AR 模型结合 MA 模型， q=0,则退化为AR模型， p=0则退化为MA模型</p>
+<h4 id="模型选择-1"><a href="#模型选择-1" class="headerlink" title="模型选择"></a>模型选择</h4><ul>
+<li>AIC:赤池信息准则（AkaikeInformation Criterion，AIC）<br>$$<br>𝐴𝐼𝐶=2𝑘−2ln(𝐿)<br>$$</li>
+<li>BIC:贝叶斯信息准则（Bayesian Information Criterion，BIC）<br>$$<br>𝐵𝐼𝐶=𝑘𝑙𝑛(n)−2ln(𝐿)<br>$$<br>k为模型参数个数，n为样本数量，L为似然函数</li>
+</ul>
+<ul>
+<li><p>模型残差检验：</p>
+<p>  ARIMA模型的残差是否是平均值为0且方差为常数的正态分布<br>  QQ图：线性即正态分布</p>
+</li>
+</ul>
+<p><a href="https://blog.csdn.net/qifeidemumu/article/details/88782550" target="_blank" rel="noopener">出处</a></p>
+<p><a href="https://blog.csdn.net/ljzology/article/details/81287500" target="_blank" rel="noopener">最优模型选择的准则：AIC、BIC准则</a></p>
+<h2 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a><em>阅读</em></h2><p><a href="https://zhuanlan.zhihu.com/p/32634593" target="_blank" rel="noopener">为什么会觉得时间序列模型比较难学</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/time-series/" rel="tag"># time series</a>
+          
+            <a href="/tags/时间序列/" rel="tag"># 时间序列</a>
+          
+            <a href="/tags/AR/" rel="tag"># AR</a>
+          
+            <a href="/tags/MA/" rel="tag"># MA</a>
+          
+            <a href="/tags/ARMA/" rel="tag"># ARMA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/16/Tools_and_Enviroment/" rel="next" title="tools and enviroment">
+                <i class="fa fa-chevron-left"></i> tools and enviroment
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Neversn</p>
+              <div class="site-description motion-element" itemprop="description">Never say never...</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#时序问题的一般套路"><span class="nav-number">1.</span> <span class="nav-text">时序问题的一般套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#时序问题传统分析流程"><span class="nav-number">1.1.</span> <span class="nav-text">时序问题传统分析流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时序平稳性"><span class="nav-number">1.1.1.</span> <span class="nav-text">时序平稳性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时序平稳性检测手段"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">时序平稳性检测手段</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#时序图"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">时序图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ACF"><span class="nav-number">1.1.1.1.2.</span> <span class="nav-text">ACF</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PACF"><span class="nav-number">1.1.1.1.3.</span> <span class="nav-text">PACF</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模型选择"><span class="nav-number">1.1.1.1.4.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ADF"><span class="nav-number">1.1.1.1.5.</span> <span class="nav-text">ADF</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#ADF原理"><span class="nav-number">1.1.1.1.5.1.</span> <span class="nav-text">ADF原理</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#补充阅读"><span class="nav-number">1.1.1.1.6.</span> <span class="nav-text">补充阅读</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#差分"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">差分</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一阶差分"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">一阶差分</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时序模型"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">时序模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AR模型-Autoregressive-Model"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">AR模型(Autoregressive Model)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MA模型-moving-average-model"><span class="nav-number">1.1.1.3.2.</span> <span class="nav-text">MA模型(moving average model)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ARMA模型"><span class="nav-number">1.1.1.3.3.</span> <span class="nav-text">ARMA模型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型选择-1"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">模型选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阅读"><span class="nav-number">1.2.</span> <span class="nav-text">阅读</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neversn</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
