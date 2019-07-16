@@ -8,7 +8,7 @@ tags:
 - hexo 
 - nexT
 categories: 
-- 流水笔记 
+- 实践手札 
 ---
 
 # blog搭建日记
