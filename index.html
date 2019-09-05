@@ -558,6 +558,196 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/科学上网/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neversn">
+      <meta itemprop="description" content="Never say never...">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neversn'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/16/科学上网/" class="post-title-link" itemprop="url">科学上网</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-16 00:00:00 / 修改时间：20:50:26" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/实践手札/" itemprop="url" rel="index"><span itemprop="name">实践手札</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>﻿# 科学上网</p>
+<p>标签（空格分隔）： 科学上网 proxy </p>
+<p>[TOC]</p>
+<hr>
+<h2 id="1-shadowsocks-vps-kcptun"><a href="#1-shadowsocks-vps-kcptun" class="headerlink" title="1. shadowsocks + vps + kcptun"></a>1. shadowsocks + vps + kcptun</h2><h3 id="vps"><a href="#vps" class="headerlink" title="vps"></a>vps</h3><h4 id="搬瓦工"><a href="#搬瓦工" class="headerlink" title="搬瓦工"></a>搬瓦工</h4><p><a href="http://banwagong.jiaochengwang.top/" title="搬瓦工教程" target="_blank" rel="noopener">搬瓦工教程</a><br>账号：<a href="mailto:905...@qq.com" target="_blank" rel="noopener">905...@qq.com</a>\J..97<br>ssh : 27677/4ntkGeyv4a0j</p>
+<h5 id="搬瓦工相关"><a href="#搬瓦工相关" class="headerlink" title="搬瓦工相关"></a>搬瓦工相关</h5><p>ip ：66.112.217.238<br><a href="https://www.bandwagonhost.net/1983.html" target="_blank" rel="noopener">查看ip是否被封</a></p>
+<blockquote>
+<p>KiwiVM 面板,然后再浏览器输入：<a href="https://kiwivm.64clouds.com/main-exec.php?mode=blacklistcheck" target="_blank" rel="noopener">https://kiwivm.64clouds.com/main-exec.php?mode=blacklistcheck</a></p>
+</blockquote>
+<h3 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h3><p><a href="https://blog.csdn.net/qq_4278923/article/details/80909686" title="为什么打开KiwiVM面板后没有shadowsock选项?三种方法搭建SS教程！" target="_blank" rel="noopener">shadow教程</a> </p>
+<blockquote>
+<p>1、如果后台没有一键SS按钮，我们只需要登陆到搬瓦工后台，然后在浏览器输入如下链接，并回车：<br><a href="https://kiwivm.64clouds.com/preloader.php?load=/main-exec.php?mode=extras_shadowsocks" target="_blank" rel="noopener">https://kiwivm.64clouds.com/preloader.php?load=/main-exec.php?mode=extras_shadowsocks</a></p>
+</blockquote>
+<h3 id="browse-plugins"><a href="#browse-plugins" class="headerlink" title="browse plugins"></a>browse plugins</h3><ul>
+<li>SwitchyOmega<br><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">在线PAC地址</a></li>
+</ul>
+<p>客户端的安装:</p>
+<ol>
+<li>linux<br>其实就是一句话;<br>sudo <strong>apt</strong> insatll shadownsocks<br><a href="https://blog.csdn.net/jason_cuijiahui/article/details/79463515" title="Linux下使用shadowsocks配置" target="_blank" rel="noopener">linux 使用ubuntu安装shadownsocks</a><blockquote>
+<p>sslocal -s 111.222.333.444 -p 10086 -k “123456” -l 1080 -t 600 -m aes-256-cfb<br>其中-s表示服务IP, -p指的是服务端的端口，-l是本地端口默认是1080, -k 是密码（要加”“）, -t超时默认300,-m是加密方法默认aes-256-cfb<br>为了方便使用，我们把他写到新建的json文件中 </p>
+</blockquote>
+</li>
+<li>window<br>去github上下载个shadowsock-window<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"server"</span>:<span class="string">"66.112.217.55"</span>,</span><br><span class="line"><span class="attr">"server_port"</span>:<span class="number">443</span>,</span><br><span class="line"><span class="attr">"local_port"</span>:xxxx,</span><br><span class="line"><span class="attr">"password"</span>:<span class="string">"OTFkOGZlYm"</span>,</span><br><span class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>然后使用<br>sslocal -c /xxx/shadowsocks.json 启动</p>
+</blockquote>
+<p><a href="https://www.aliyun.com/jiaocheng/123836.html" title="Linux安装配置Shadowsocks客户端及开机自动启动 " target="_blank" rel="noopener">启动指令</a></p>
+<hr>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Tools_and_Enviroment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -764,196 +954,6 @@
 <ol start="2">
 <li>chrome://flags/#ntp-custom-links<br>Disable</li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/科学上网/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Neversn">
-      <meta itemprop="description" content="Never say never...">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neversn'Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/16/科学上网/" class="post-title-link" itemprop="url">科学上网</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-16 00:00:00 / 修改时间：20:50:26" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/实践手札/" itemprop="url" rel="index"><span itemprop="name">实践手札</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>﻿# 科学上网</p>
-<p>标签（空格分隔）： 科学上网 proxy </p>
-<p>[TOC]</p>
-<hr>
-<h2 id="1-shadowsocks-vps-kcptun"><a href="#1-shadowsocks-vps-kcptun" class="headerlink" title="1. shadowsocks + vps + kcptun"></a>1. shadowsocks + vps + kcptun</h2><h3 id="vps"><a href="#vps" class="headerlink" title="vps"></a>vps</h3><h4 id="搬瓦工"><a href="#搬瓦工" class="headerlink" title="搬瓦工"></a>搬瓦工</h4><p><a href="http://banwagong.jiaochengwang.top/" title="搬瓦工教程" target="_blank" rel="noopener">搬瓦工教程</a><br>账号：<a href="mailto:905...@qq.com" target="_blank" rel="noopener">905...@qq.com</a>\J..97<br>ssh : 27677/4ntkGeyv4a0j</p>
-<h5 id="搬瓦工相关"><a href="#搬瓦工相关" class="headerlink" title="搬瓦工相关"></a>搬瓦工相关</h5><p>ip ：66.112.217.238<br><a href="https://www.bandwagonhost.net/1983.html" target="_blank" rel="noopener">查看ip是否被封</a></p>
-<blockquote>
-<p>KiwiVM 面板,然后再浏览器输入：<a href="https://kiwivm.64clouds.com/main-exec.php?mode=blacklistcheck" target="_blank" rel="noopener">https://kiwivm.64clouds.com/main-exec.php?mode=blacklistcheck</a></p>
-</blockquote>
-<h3 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h3><p><a href="https://blog.csdn.net/qq_4278923/article/details/80909686" title="为什么打开KiwiVM面板后没有shadowsock选项?三种方法搭建SS教程！" target="_blank" rel="noopener">shadow教程</a> </p>
-<blockquote>
-<p>1、如果后台没有一键SS按钮，我们只需要登陆到搬瓦工后台，然后在浏览器输入如下链接，并回车：<br><a href="https://kiwivm.64clouds.com/preloader.php?load=/main-exec.php?mode=extras_shadowsocks" target="_blank" rel="noopener">https://kiwivm.64clouds.com/preloader.php?load=/main-exec.php?mode=extras_shadowsocks</a></p>
-</blockquote>
-<h3 id="browse-plugins"><a href="#browse-plugins" class="headerlink" title="browse plugins"></a>browse plugins</h3><ul>
-<li>SwitchyOmega<br><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">在线PAC地址</a></li>
-</ul>
-<p>客户端的安装:</p>
-<ol>
-<li>linux<br>其实就是一句话;<br>sudo <strong>apt</strong> insatll shadownsocks<br><a href="https://blog.csdn.net/jason_cuijiahui/article/details/79463515" title="Linux下使用shadowsocks配置" target="_blank" rel="noopener">linux 使用ubuntu安装shadownsocks</a><blockquote>
-<p>sslocal -s 111.222.333.444 -p 10086 -k “123456” -l 1080 -t 600 -m aes-256-cfb<br>其中-s表示服务IP, -p指的是服务端的端口，-l是本地端口默认是1080, -k 是密码（要加”“）, -t超时默认300,-m是加密方法默认aes-256-cfb<br>为了方便使用，我们把他写到新建的json文件中 </p>
-</blockquote>
-</li>
-<li>window<br>去github上下载个shadowsock-window<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"server"</span>:<span class="string">"66.112.217.55"</span>,</span><br><span class="line"><span class="attr">"server_port"</span>:<span class="number">443</span>,</span><br><span class="line"><span class="attr">"local_port"</span>:xxxx,</span><br><span class="line"><span class="attr">"password"</span>:<span class="string">"OTFkOGZlYm"</span>,</span><br><span class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>然后使用<br>sslocal -c /xxx/shadowsocks.json 启动</p>
-</blockquote>
-<p><a href="https://www.aliyun.com/jiaocheng/123836.html" title="Linux安装配置Shadowsocks客户端及开机自动启动 " target="_blank" rel="noopener">启动指令</a></p>
-<hr>
 
           
         
@@ -1571,7 +1571,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 20:34:46" itemprop="dateModified" datetime="2019-07-16T20:34:46+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 20:59:12" itemprop="dateModified" datetime="2019-07-16T20:59:12+08:00">2019-07-16</time>
               
             
           </span>
@@ -1625,7 +1625,7 @@
       
         
           
-            <h1 id="blog搭建日记"><a href="#blog搭建日记" class="headerlink" title="blog搭建日记"></a>blog搭建日记</h1><h2 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h2><h3 id="gitpage-初步尝试"><a href="#gitpage-初步尝试" class="headerlink" title="gitpage 初步尝试"></a>gitpage 初步尝试</h3><p>参考： <a href="https://pages.github.com/" target="_blank" rel="noopener">gitpage官方介绍</a></p>
+            <h1 id="blog搭建日记"><a href="#blog搭建日记" class="headerlink" title="blog搭建日记"></a>blog搭建日记</h1><h2 id="初步尝试"><a href="#初步尝试" class="headerlink" title="初步尝试"></a>初步尝试</h2><h3 id="gitpage-初步尝试"><a href="#gitpage-初步尝试" class="headerlink" title="gitpage 初步尝试"></a>gitpage 初步尝试</h3><p>参考： <a href="https://pages.github.com/" target="_blank" rel="noopener">gitpage官方介绍</a></p>
 <p>个人理解，gitpage应该是github 提供的静态网页托管服务，他和git仓库的某个分支绑定，自动部署。</p>
 <ul>
 <li><p>创建username.github.io 为名的仓库</p>
@@ -1646,7 +1646,7 @@
 </ul>
 <h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>按着教程按部就班，使得<a href="https://neversn.github.io/" target="_blank" rel="noopener">个人主页</a>可以访问了。</p>
 <p><img src="/2019/05/14/build_blog_diary/1557759138571.png" alt="1557759138571"></p>
-<h2 id="Day-2"><a href="#Day-2" class="headerlink" title="Day 2"></a>Day 2</h2><h3 id="更换主题：nexT"><a href="#更换主题：nexT" class="headerlink" title="更换主题：nexT"></a>更换主题：nexT</h3><p><a href="https://theme-next.org/docs/getting-started/" target="_blank" rel="noopener">NexT User Docs – Starting to Use</a></p>
+<h2 id="更改主题并新建博文"><a href="#更改主题并新建博文" class="headerlink" title="更改主题并新建博文"></a>更改主题并新建博文</h2><h3 id="更换主题：nexT"><a href="#更换主题：nexT" class="headerlink" title="更换主题：nexT"></a>更换主题：nexT</h3><p><a href="https://theme-next.org/docs/getting-started/" target="_blank" rel="noopener">NexT User Docs – Starting to Use</a></p>
 <ul>
 <li>更改language:  后， 重启生效</li>
 </ul>
@@ -1661,7 +1661,7 @@
 <h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
 <li>无法访问图片</li>
 </ul>
-<h2 id="Day-3"><a href="#Day-3" class="headerlink" title="Day 3"></a>Day 3</h2><h3 id="博客中图片无法显示问题"><a href="#博客中图片无法显示问题" class="headerlink" title="博客中图片无法显示问题"></a>博客中图片无法显示问题</h3><ul>
+<h2 id="图片无法显示问题"><a href="#图片无法显示问题" class="headerlink" title="图片无法显示问题"></a>图片无法显示问题</h2><h3 id="博客中图片无法显示问题"><a href="#博客中图片无法显示问题" class="headerlink" title="博客中图片无法显示问题"></a>博客中图片无法显示问题</h3><ul>
 <li><p>原因：生成静态页面目录与实际文件目录不一致。</p>
 <p>图片访问地址为： </p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src=<span class="string">"/2019/05/14/build_blog_diary/**2019-05-14-build_blog_diary**/1557755944810.png"</span></span><br></pre></td></tr></table></figure>
@@ -1676,7 +1676,7 @@
 <h3 id="遗留问题-1"><a href="#遗留问题-1" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
 <li>上述问题解决后，本地编辑器无法很好地预览图片。</li>
 </ul>
-<h2 id="Day-4"><a href="#Day-4" class="headerlink" title="Day 4"></a>Day 4</h2><h3 id="hexo-asset-image-插件-本地-静态页面-插画图片统一问题"><a href="#hexo-asset-image-插件-本地-静态页面-插画图片统一问题" class="headerlink" title="hexo-asset-image 插件 本地 静态页面 插画图片统一问题"></a>hexo-asset-image 插件 本地 静态页面 插画图片统一问题</h3><ul>
+<h2 id="更换插件-hexo-asset-image"><a href="#更换插件-hexo-asset-image" class="headerlink" title="更换插件 hexo-asset-image"></a>更换插件 hexo-asset-image</h2><h3 id="hexo-asset-image-插件-本地-静态页面-插画图片统一问题"><a href="#hexo-asset-image-插件-本地-静态页面-插画图片统一问题" class="headerlink" title="hexo-asset-image 插件 本地 静态页面 插画图片统一问题"></a>hexo-asset-image 插件 本地 静态页面 插画图片统一问题</h3><ul>
 <li><p>分析Day 3遗留问题，查看最新<a href="https://github.com/xcodebuild/hexo-asset-image/blob/master/index.js" target="_blank" rel="noopener">hexo-asset-image插件源码</a>:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">			  <span class="keyword">var</span> srcArray = src.split(<span class="string">'/'</span>).filter(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>)</span>&#123;</span><br><span class="line">				<span class="keyword">return</span> elem != <span class="string">''</span> &amp;&amp; elem != <span class="string">'.'</span>;</span><br><span class="line">			  &#125;);</span><br><span class="line">			  <span class="keyword">if</span>(srcArray.length &gt; <span class="number">1</span>)</span><br><span class="line">				srcArray.shift();</span><br><span class="line">			  src = srcArray.join(<span class="string">'/'</span>);</span><br><span class="line">			  $(<span class="keyword">this</span>).attr(<span class="string">'src'</span>, config.root + link + src);</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
 <p>发现，插件将原文章中图片引用链接移除了第一个/ 及之前的内容。故相对路径引用<strong>不应</strong>使用 [](./title/A.png) 而<strong>应该</strong>使用  [](tiltle/A.png)</p>
@@ -1717,7 +1717,7 @@
 <p><img src="/2019/05/14/build_blog_diary/hexo_git_config.png" alt="hexo_git_config"></p>
 </li>
 </ul>
-<h2 id="Day-5"><a href="#Day-5" class="headerlink" title="Day 5"></a>Day 5</h2><h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><hr>
+<h2 id="laTex-语法支持"><a href="#laTex-语法支持" class="headerlink" title="laTex 语法支持"></a>laTex 语法支持</h2><h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><hr>
 <p><strong><em>参考资料</em></strong></p>
 <hr>
 
@@ -1819,8 +1819,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
