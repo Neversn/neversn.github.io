@@ -14,7 +14,7 @@ categories:
 # blog搭建日记
 
 
-##  Day 1
+##  初步尝试
 
 ### gitpage 初步尝试
 
@@ -50,7 +50,7 @@ categories:
 
 ![1557759138571](2019-05-14-build_blog_diary/1557759138571.png)
 
-## Day 2
+## 更改主题并新建博文
 
 ### 更换主题：nexT
 
@@ -80,7 +80,7 @@ hexo new post title
 
 - 无法访问图片
 
-## Day 3
+## 图片无法显示问题
 
 ### 博客中图片无法显示问题
 
@@ -108,7 +108,7 @@ hexo new post title
 
 - 上述问题解决后，本地编辑器无法很好地预览图片。
 
-## Day 4
+## 更换插件 hexo-asset-image
 
 ### hexo-asset-image 插件 本地 静态页面 插画图片统一问题
 
@@ -179,9 +179,11 @@ hexo new post title
 
   ![hexo_git_config](2019-05-14-build_blog_diary/hexo_git_config.png)
 
-## Day 5
 
-### 绑定域名
+
+## laTex 语法支持
+
+## 绑定域名
 
 
 
