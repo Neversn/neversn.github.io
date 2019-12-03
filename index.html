@@ -372,12 +372,24 @@
                 
               
 
-              <time title="创建时间：2019-07-16 00:00:00 / 修改时间：20:28:32" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
+              <time title="创建时间：2019-07-16 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-03 22:24:43" itemprop="dateModified" datetime="2019-12-03T22:24:43+08:00">2019-12-03</time>
               
             
           </span>
@@ -438,260 +450,97 @@
       
         
           
-            <h1 id="时序问题的一般套路"><a href="#时序问题的一般套路" class="headerlink" title="时序问题的一般套路"></a>时序问题的一般套路</h1><h2 id="时序问题传统分析流程"><a href="#时序问题传统分析流程" class="headerlink" title="时序问题传统分析流程"></a>时序问题传统分析流程</h2><p><a href="https://www.jianshu.com/p/6ead565b34e4" target="_blank" rel="noopener">机器学习之时间序列分析一般思路</a></p>
-<ol>
-<li>先进行纯随机检测、平稳性分析</li>
-<li>若不平稳，差分处理</li>
-<li>建立模型</li>
-<li>模型检测</li>
-</ol>
-<h3 id="时序平稳性"><a href="#时序平稳性" class="headerlink" title="时序平稳性"></a>时序平稳性</h3><ul>
-<li>严格平稳（强平稳）<br>序列截取任意长度，其联合分布与时间无关。</li>
-<li>弱平稳<br>相关系数只与时间差有关</li>
+            <h1 id="时序问题的一般套路">时序问题的一般套路</h1>
+<h2 id="时序问题传统分析流程">时序问题传统分析流程</h2>
+<p><a href="https://www.jianshu.com/p/6ead565b34e4" target="_blank" rel="noopener">机器学习之时间序列分析一般思路</a> 1. 先进行纯随机检测、平稳性分析 2. 若不平稳，差分处理 3. 建立模型 4. 模型检测</p>
+<h3 id="时序平稳性">时序平稳性</h3>
+<ul>
+<li>严格平稳（强平稳）<br>
+序列截取任意长度，其联合分布与时间无关。</li>
+<li>弱平稳<br>
+相关系数只与时间差有关</li>
 </ul>
-<p><a href="https://www.zhihu.com/question/29128649?sort=created" target="_blank" rel="noopener">严格平稳 弱平稳 知乎问题</a><br><a href="https://www.zhihu.com/question/21982358" target="_blank" rel="noopener">时序平稳性 知乎问题</a></p>
+<p><a href="https://www.zhihu.com/question/29128649?sort=created" target="_blank" rel="noopener">严格平稳 弱平稳 知乎问题</a><br>
+<a href="https://www.zhihu.com/question/21982358" target="_blank" rel="noopener">时序平稳性 知乎问题</a></p>
 <blockquote>
 <p>平稳的基本思想是：时间序列的行为并不随时间改变。</p>
 </blockquote>
 <blockquote>
-<p>一般而言，时间序列被看作一个随机过程{Xt}，随机过程是啥，就是一列随机变量，在离散情况下比如我取前n个就是X1 X2 X3。。。。Xn是个n维随机变量。随机变量总学过吧，给你个随机变量Xi他的期望方差啊分布是什么之类的就是我们想要研究的。严平稳：多元分布保持不变。（X1,X2,X3)是个三维随机变量，（X3,X4,X5)也是个三维随机变量，严格平稳表示任何形如（Xn-1,Xn,Xn+1)的三维随机变量分布都是一样的。当然不仅仅是三维，而是任何维的随机变量分布不变。<strong>严平稳表示的分布不随时间的改变而改变</strong>。我研究第1到第n个随机变量跟第2到第n+1个随机变量性质是一样的。最简单的例子，白噪声（正态），无论怎么取，都是期望为0，方差为1，协方差都为0的n维正态分布。弱平稳：首先要有个平稳的改变，别有啥趋势，所以任何一点t，Xt的期望是常数（通常我们让他为0），弱平稳没有分布不于时间无关这个性质，但是弱平稳抓住了另一个不变性——相关系数。这说明什么，X1于X3的相关系数， X2与X4的相关系数都是一样的，也就是 说相关系数取决于时间间隔而非时间起始点。这个东西很有用啊，你做回归是研究Y依赖于X的关系，可是单一时间序列只有X没有Y啊，未来某时刻的t的值Xt就要依赖于它的过去信息吧，如果没有依赖性，那这模型没法做了，如果有，跟前几期数据有关系？比如Xt-1 Xt-2能提供预测Xt的信息，那么这个他们的依赖关系又如何？如果是弱平稳的，这个关系还可能是一致的，否则不同的时间t，Xt与Xt-1 Xt-2的关系不统一，我们还建模个毛线啊？通常情况下时间序列分析讨论的是弱平稳序列。题主说熟悉回归，那回归中异方差，多重共线性等问题怎么解决？同样，时间序列里你的数据平稳不平稳对你的建模也是至关重要，<strong>弱平稳是许多时间序列模型的假设条件</strong>。<br>作者：亲爱的龙哥<br><a href="https://www.zhihu.com/question/29128649/answer/43723157" target="_blank" rel="noopener">链接</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 </p>
+<p>一般而言，时间序列被看作一个随机过程{Xt}，随机过程是啥，就是一列随机变量，在离散情况下比如我取前n个就是X1 X2 X3。。。。Xn是个n维随机变量。随机变量总学过吧，给你个随机变量Xi他的期望方差啊分布是什么之类的就是我们想要研究的。严平稳：多元分布保持不变。（X1,X2,X3)是个三维随机变量，（X3,X4,X5)也是个三维随机变量，严格平稳表示任何形如（Xn-1,Xn,Xn+1)的三维随机变量分布都是一样的。当然不仅仅是三维，而是任何维的随机变量分布不变。<strong>严平稳表示的分布不随时间的改变而改变</strong>。我研究第1到第n个随机变量跟第2到第n+1个随机变量性质是一样的。最简单的例子，白噪声（正态），无论怎么取，都是期望为0，方差为1，协方差都为0的n维正态分布。弱平稳：首先要有个平稳的改变，别有啥趋势，所以任何一点t，Xt的期望是常数（通常我们让他为0），弱平稳没有分布不于时间无关这个性质，但是弱平稳抓住了另一个不变性——相关系数。这说明什么，X1于X3的相关系数， X2与X4的相关系数都是一样的，也就是 说相关系数取决于时间间隔而非时间起始点。这个东西很有用啊，你做回归是研究Y依赖于X的关系，可是单一时间序列只有X没有Y啊，未来某时刻的t的值Xt就要依赖于它的过去信息吧，如果没有依赖性，那这模型没法做了，如果有，跟前几期数据有关系？比如Xt-1 Xt-2能提供预测Xt的信息，那么这个他们的依赖关系又如何？如果是弱平稳的，这个关系还可能是一致的，否则不同的时间t，Xt与Xt-1 Xt-2的关系不统一，我们还建模个毛线啊？通常情况下时间序列分析讨论的是弱平稳序列。题主说熟悉回归，那回归中异方差，多重共线性等问题怎么解决？同样，时间序列里你的数据平稳不平稳对你的建模也是至关重要，<strong>弱平稳是许多时间序列模型的假设条件</strong>。<br>
+作者：亲爱的龙哥<br>
+<a href="https://www.zhihu.com/question/29128649/answer/43723157" target="_blank" rel="noopener">链接</a><br>
+来源：知乎<br>
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 </blockquote>
 <blockquote>
 <p>对于平稳的定义，还有一点需要补充。一般认为，过滤掉线性趋势、季节性因素后，表现出平稳特征的数据，可以看成某种广义的平稳。</p>
 </blockquote>
-<h4 id="时序平稳性检测手段"><a href="#时序平稳性检测手段" class="headerlink" title="时序平稳性检测手段"></a>时序平稳性检测手段</h4><h5 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h5><p>一个平稳序列的时间路径图应该是在一个常数附近波动的，切波动范围是有界的。</p>
-<h5 id="ACF"><a href="#ACF" class="headerlink" title="ACF"></a><a href="https://baike.baidu.com/item/%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/9851266" target="_blank" rel="noopener">ACF</a></h5><p>ACF(自相关函数，auto correlation function): 两个随机过程中不同时刻的数值间的皮尔森相关<br>$R(s,t) = \frac{E[(X_s-\mu_s)E[(X_t-\mu_t)]}{\sigma_s\sigma_t}$<br>如果X为广义平稳过程，则的期望$\mu_t$以及标准差$\sigma_t$不随时间t变化，则自相关函数可以表示为时间延迟$\tau$<br>的函数<br>$R(\tau) = \frac{E[(X_t-\mu)E[(X_{t+\tau}-\mu)]}{\sigma_t^2}$</p>
+<h4 id="时序平稳性检测手段">时序平稳性检测手段</h4>
+<h5 id="时序图">时序图</h5>
+<p>一个平稳序列的时间路径图应该是在一个常数附近波动的，切波动范围是有界的。</p>
+<h5 id="acf"><a href="https://baike.baidu.com/item/%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/9851266" target="_blank" rel="noopener">ACF</a></h5>
+<p>ACF(自相关函数，auto correlation function): 两个随机过程中不同时刻的数值间的皮尔森相关<br>
+<span class="math inline">\(R(s,t) = \frac{E[(X_s-\mu_s)E[(X_t-\mu_t)]}{\sigma_s\sigma_t}\)</span><br>
+如果X为广义平稳过程，则的期望<span class="math inline">\(\mu_t\)</span>以及标准差<span class="math inline">\(\sigma_t\)</span>不随时间t变化，则自相关函数可以表示为时间延迟<span class="math inline">\(\tau\)</span> 的函数 <span class="math inline">\(R(\tau) = \frac{E[(X_t-\mu)E[(X_{t+\tau}-\mu)]}{\sigma_t^2}\)</span></p>
 <p>表示：滞后的数据与自身的相关性</p>
-<h5 id="PACF"><a href="#PACF" class="headerlink" title="PACF"></a>PACF</h5><p><a href="https://www.cnblogs.com/ylxn/p/10750710.html" target="_blank" rel="noopener">自相关系数 ACF与偏自相关系数PACF，拖尾和截尾</a></p>
+<h5 id="pacf">PACF</h5>
+<p><a href="https://www.cnblogs.com/ylxn/p/10750710.html" target="_blank" rel="noopener">自相关系数 ACF与偏自相关系数PACF，拖尾和截尾</a> &gt;自相关系数ρ(t,s)并不是只有两个点t和s的数据决定的。而是还包含了t-1 ~ s+1时间段值的影响。而PACF是严格这两个变量之间的相关性。 公式很复杂的样子，<a href="https://zhuanlan.zhihu.com/p/26525852" target="_blank" rel="noopener">参考</a></p>
+<h5 id="模型选择">模型选择</h5>
 <blockquote>
-<p>自相关系数ρ(t,s)并不是只有两个点t和s的数据决定的。而是还包含了t-1 ~ s+1时间段值的影响。而PACF是严格这两个变量之间的相关性。<br>公式很复杂的样子，<a href="https://zhuanlan.zhihu.com/p/26525852" target="_blank" rel="noopener">参考</a></p>
+<p>如果偏自相关函数是截尾，而自相关函数是拖尾，则建立AR模型<br>
+如果偏自相关函数是拖尾，而自相关函数是截尾，则建立MA模型<br>
+如果偏自相关函数和自相关函数都是拖尾，则建立ARMA模型<a href="https://www.jianshu.com/p/6ead565b34e4" target="_blank" rel="noopener">出处</a></p>
 </blockquote>
-<h5 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h5><blockquote>
-<p>如果偏自相关函数是截尾，而自相关函数是拖尾，则建立AR模型<br>    如果偏自相关函数是拖尾，而自相关函数是截尾，则建立MA模型<br>    如果偏自相关函数和自相关函数都是拖尾，则建立ARMA模型<a href="https://www.jianshu.com/p/6ead565b34e4" target="_blank" rel="noopener">出处</a></p>
-</blockquote>
-<h5 id="ADF"><a href="#ADF" class="headerlink" title="ADF"></a>ADF</h5><p>单位根检验(ADF, Augmented Dickey-Fuller Test)</p>
-<blockquote>
-<p>当单位根存在时，自变量和因变量之间的关系具有欺骗性，因为残差序列的任何误差都不会随着样本量（即时期数）增大而衰减，也就是说模型中的残差的影响是永久的。这种回归又称作伪回归。如果单位根存在，这个过程就是一个随机漫步（random walk）。</p>
-</blockquote>
-<h6 id="ADF原理"><a href="#ADF原理" class="headerlink" title="ADF原理"></a>ADF原理</h6><blockquote>
-<p>ADF检验就是判断序列是否存在单位根：如果序列平稳，就不存在单位根；否则，就会存在单位根。<br>所以，ADF检验的 H0 假设就是存在单位根，如果得到的显著性检验统计量小于三个置信度（10%，5%，1%），则对应有（90%，95，99%）的把握来拒绝原假设。</p>
-</blockquote>
-<h5 id="补充阅读"><a href="#补充阅读" class="headerlink" title="补充阅读"></a>补充阅读</h5><p><a href="https://wenku.baidu.com/view/22d087ef69dc5022aaea008c.html" target="_blank" rel="noopener">单位根的DF、ADF检验与PP检验比较研究</a><br><a href="blog.sina.com.cn/s/blog_4d69f4fe0101hzz7.html">稳性的单位根检验：DF检验、ADF检验、DFGLS检验、PP检验、KPSS检验、ERS检验和NP检验</a></p>
-<h4 id="差分"><a href="#差分" class="headerlink" title="差分"></a><a href="https://baike.baidu.com/item/%E4%B8%80%E9%98%B6%E5%B7%AE%E5%88%86/3937421" target="_blank" rel="noopener">差分</a></h4><p><a href="http://www.atyun.com/4248.html" target="_blank" rel="noopener">各种差分方式</a></p>
-<h5 id="一阶差分"><a href="#一阶差分" class="headerlink" title="一阶差分"></a>一阶差分</h5><p>f(x)在x处的一阶差分$\Delta x$为:</p>
-<p>$$<br>\Delta x = f(x+1)-f(x)<br>$$</p>
-<h4 id="时序模型"><a href="#时序模型" class="headerlink" title="时序模型"></a>时序模型</h4><p><a href="https://blog.csdn.net/fredric_2014/article/details/85340339" target="_blank" rel="noopener">平稳序列建模</a><br><a href="https://wenku.baidu.com/view/97301f2aaeaad1f347933fa2.html" target="_blank" rel="noopener">适用于平稳时序的三种基本模型</a></p>
-<h5 id="AR模型-Autoregressive-Model"><a href="#AR模型-Autoregressive-Model" class="headerlink" title="AR模型(Autoregressive Model)"></a><a href="https://baike.baidu.com/item/%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/1037587" target="_blank" rel="noopener">AR模型</a>(Autoregressive Model)</h5><p>模型理解：X的当前值等于一个或数个落后期的线性组合，加常数项，加随机误差。</p>
+<h5 id="adf">ADF</h5>
+<p>单位根检验(ADF, Augmented Dickey-Fuller Test) &gt;当单位根存在时，自变量和因变量之间的关系具有欺骗性，因为残差序列的任何误差都不会随着样本量（即时期数）增大而衰减，也就是说模型中的残差的影响是永久的。这种回归又称作伪回归。如果单位根存在，这个过程就是一个随机漫步（random walk）。 ###### ADF原理 &gt;ADF检验就是判断序列是否存在单位根：如果序列平稳，就不存在单位根；否则，就会存在单位根。 所以，ADF检验的 H0 假设就是存在单位根，如果得到的显著性检验统计量小于三个置信度（10%，5%，1%），则对应有（90%，95，99%）的把握来拒绝原假设。</p>
+<h5 id="补充阅读">补充阅读</h5>
+<p><a href="https://wenku.baidu.com/view/22d087ef69dc5022aaea008c.html" target="_blank" rel="noopener">单位根的DF、ADF检验与PP检验比较研究</a><br>
+<a href="blog.sina.com.cn/s/blog_4d69f4fe0101hzz7.html">稳性的单位根检验：DF检验、ADF检验、DFGLS检验、PP检验、KPSS检验、ERS检验和NP检验</a></p>
+<h4 id="差分"><a href="https://baike.baidu.com/item/%E4%B8%80%E9%98%B6%E5%B7%AE%E5%88%86/3937421" target="_blank" rel="noopener">差分</a></h4>
+<p><a href="http://www.atyun.com/4248.html" target="_blank" rel="noopener">各种差分方式</a></p>
+<h5 id="一阶差分">一阶差分</h5>
+<p>f(x)在x处的一阶差分<span class="math inline">\(\Delta x\)</span>为:</p>
+<p><span class="math display">\[
+\Delta x = f(x+1)-f(x)
+\]</span></p>
+<h4 id="时序模型">时序模型</h4>
+<p><a href="https://blog.csdn.net/fredric_2014/article/details/85340339" target="_blank" rel="noopener">平稳序列建模</a><br>
+<a href="https://wenku.baidu.com/view/97301f2aaeaad1f347933fa2.html" target="_blank" rel="noopener">适用于平稳时序的三种基本模型</a></p>
+<h5 id="ar模型autoregressive-model"><a href="https://baike.baidu.com/item/%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B/1037587" target="_blank" rel="noopener">AR模型</a>(Autoregressive Model)</h5>
+<p>模型理解：X的当前值等于一个或数个落后期的线性组合，加常数项，加随机误差。</p>
 <p>p阶自回归模型</p>
-<p>$$<br>X_t = c + \sum_{i=1}^p \phi_iX_{t-i} + \epsilon_t \<br>$$<br>$其中 c为常数项， \epsilon_t被假设为平均数等于0，标准差等于\sigma的随机误差值(白噪声),\sigma与时间无关$</p>
-<h5 id="MA模型-moving-average-model"><a href="#MA模型-moving-average-model" class="headerlink" title="MA模型(moving average model)"></a><a href="https://baike.baidu.com/item/MA%E6%A8%A1%E5%9E%8B/16688582" target="_blank" rel="noopener">MA模型</a>(moving average model)</h5><p>模型理解：t时刻时序的值等于过去值得均值加上q个时间下<strong>随机误差</strong>的线性组合</p>
+<p><span class="math display">\[
+X_t = c + \sum_{i=1}^p \phi_iX_{t-i} + \epsilon_t \\
+\]</span> <span class="math inline">\(其中 c为常数项， \epsilon_t被假设为平均数等于0，标准差等于\sigma的随机误差值(白噪声),\sigma与时间无关\)</span></p>
+<h5 id="ma模型moving-average-model"><a href="https://baike.baidu.com/item/MA%E6%A8%A1%E5%9E%8B/16688582" target="_blank" rel="noopener">MA模型</a>(moving average model)</h5>
+<p>模型理解：t时刻时序的值等于过去值得均值加上q个时间下<strong>随机误差</strong>的线性组合</p>
 <p>q阶移动平均模型</p>
-<p>$$<br>X_t = \mu +\epsilon_t- \sum_{i=i}^q\theta_i \epsilon_{t-i}<br>$$</p>
-<p>$其中\mu为时间序列的平均数，\epsilon_i 为 模型在t=i处的误差，\theta_i 为待估计参数$</p>
-<h5 id="ARMA模型"><a href="#ARMA模型" class="headerlink" title="ARMA模型"></a>ARMA模型</h5><p>$$<br>X_t = c + \sum_{i=1}^p \phi_iX_{t-i} +\epsilon_t-  \sum_{i=i}^q\theta_i \epsilon_{t-i}<br>$$</p>
+<p><span class="math display">\[
+X_t = \mu +\epsilon_t- \sum_{i=i}^q\theta_i \epsilon_{t-i}
+\]</span></p>
+<p><span class="math inline">\(其中\mu为时间序列的平均数，\epsilon_i 为 模型在t=i处的误差，\theta_i 为待估计参数\)</span></p>
+<h5 id="arma模型">ARMA模型</h5>
+<p><span class="math display">\[
+X_t = c + \sum_{i=1}^p \phi_iX_{t-i} +\epsilon_t-  \sum_{i=i}^q\theta_i \epsilon_{t-i}
+\]</span></p>
 <p>ARMA 模型是 AR 模型结合 MA 模型， q=0,则退化为AR模型， p=0则退化为MA模型</p>
-<h4 id="模型选择-1"><a href="#模型选择-1" class="headerlink" title="模型选择"></a>模型选择</h4><ul>
-<li>AIC:赤池信息准则（AkaikeInformation Criterion，AIC）<br>$$<br>𝐴𝐼𝐶=2𝑘−2ln(𝐿)<br>$$</li>
-<li>BIC:贝叶斯信息准则（Bayesian Information Criterion，BIC）<br>$$<br>𝐵𝐼𝐶=𝑘𝑙𝑛(n)−2ln(𝐿)<br>$$<br>k为模型参数个数，n为样本数量，L为似然函数</li>
-</ul>
+<h4 id="模型选择-1">模型选择</h4>
 <ul>
+<li><p>AIC:赤池信息准则（AkaikeInformation Criterion，AIC）<br>
+<span class="math display">\[
+𝐴𝐼𝐶=2𝑘−2ln(𝐿)
+\]</span></p></li>
+<li><p>BIC:贝叶斯信息准则（Bayesian Information Criterion，BIC） <span class="math display">\[
+𝐵𝐼𝐶=𝑘𝑙𝑛(n)−2ln(𝐿)  
+\]</span> k为模型参数个数，n为样本数量，L为似然函数</p></li>
 <li><p>模型残差检验：</p>
-<p>  ARIMA模型的残差是否是平均值为0且方差为常数的正态分布<br>  QQ图：线性即正态分布</p>
-</li>
+<p>ARIMA模型的残差是否是平均值为0且方差为常数的正态分布<br>
+QQ图：线性即正态分布</p></li>
 </ul>
 <p><a href="https://blog.csdn.net/qifeidemumu/article/details/88782550" target="_blank" rel="noopener">出处</a></p>
 <p><a href="https://blog.csdn.net/ljzology/article/details/81287500" target="_blank" rel="noopener">最优模型选择的准则：AIC、BIC准则</a></p>
-<h2 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a><em>阅读</em></h2><p><a href="https://zhuanlan.zhihu.com/p/32634593" target="_blank" rel="noopener">为什么会觉得时间序列模型比较难学</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/科学上网/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Neversn">
-      <meta itemprop="description" content="Never say never...">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Neversn'Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/16/科学上网/" class="post-title-link" itemprop="url">科学上网</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-16 00:00:00 / 修改时间：20:50:26" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/实践手札/" itemprop="url" rel="index"><span itemprop="name">实践手札</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>﻿# 科学上网</p>
-<p>标签（空格分隔）： 科学上网 proxy </p>
-<p>[TOC]</p>
-<hr>
-<h2 id="1-shadowsocks-vps-kcptun"><a href="#1-shadowsocks-vps-kcptun" class="headerlink" title="1. shadowsocks + vps + kcptun"></a>1. shadowsocks + vps + kcptun</h2><h3 id="vps"><a href="#vps" class="headerlink" title="vps"></a>vps</h3><h4 id="搬瓦工"><a href="#搬瓦工" class="headerlink" title="搬瓦工"></a>搬瓦工</h4><p><a href="http://banwagong.jiaochengwang.top/" title="搬瓦工教程" target="_blank" rel="noopener">搬瓦工教程</a><br>账号：<a href="mailto:905...@qq.com" target="_blank" rel="noopener">905...@qq.com</a>\J..97<br>ssh : 27677/4ntkGeyv4a0j</p>
-<h5 id="搬瓦工相关"><a href="#搬瓦工相关" class="headerlink" title="搬瓦工相关"></a>搬瓦工相关</h5><p>ip ：66.112.217.238<br><a href="https://www.bandwagonhost.net/1983.html" target="_blank" rel="noopener">查看ip是否被封</a></p>
-<blockquote>
-<p>KiwiVM 面板,然后再浏览器输入：<a href="https://kiwivm.64clouds.com/main-exec.php?mode=blacklistcheck" target="_blank" rel="noopener">https://kiwivm.64clouds.com/main-exec.php?mode=blacklistcheck</a></p>
-</blockquote>
-<h3 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h3><p><a href="https://blog.csdn.net/qq_4278923/article/details/80909686" title="为什么打开KiwiVM面板后没有shadowsock选项?三种方法搭建SS教程！" target="_blank" rel="noopener">shadow教程</a> </p>
-<blockquote>
-<p>1、如果后台没有一键SS按钮，我们只需要登陆到搬瓦工后台，然后在浏览器输入如下链接，并回车：<br><a href="https://kiwivm.64clouds.com/preloader.php?load=/main-exec.php?mode=extras_shadowsocks" target="_blank" rel="noopener">https://kiwivm.64clouds.com/preloader.php?load=/main-exec.php?mode=extras_shadowsocks</a></p>
-</blockquote>
-<h3 id="browse-plugins"><a href="#browse-plugins" class="headerlink" title="browse plugins"></a>browse plugins</h3><ul>
-<li>SwitchyOmega<br><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">在线PAC地址</a></li>
-</ul>
-<p>客户端的安装:</p>
-<ol>
-<li>linux<br>其实就是一句话;<br>sudo <strong>apt</strong> insatll shadownsocks<br><a href="https://blog.csdn.net/jason_cuijiahui/article/details/79463515" title="Linux下使用shadowsocks配置" target="_blank" rel="noopener">linux 使用ubuntu安装shadownsocks</a><blockquote>
-<p>sslocal -s 111.222.333.444 -p 10086 -k “123456” -l 1080 -t 600 -m aes-256-cfb<br>其中-s表示服务IP, -p指的是服务端的端口，-l是本地端口默认是1080, -k 是密码（要加”“）, -t超时默认300,-m是加密方法默认aes-256-cfb<br>为了方便使用，我们把他写到新建的json文件中 </p>
-</blockquote>
-</li>
-<li>window<br>去github上下载个shadowsock-window<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"server"</span>:<span class="string">"66.112.217.55"</span>,</span><br><span class="line"><span class="attr">"server_port"</span>:<span class="number">443</span>,</span><br><span class="line"><span class="attr">"local_port"</span>:xxxx,</span><br><span class="line"><span class="attr">"password"</span>:<span class="string">"OTFkOGZlYm"</span>,</span><br><span class="line"><span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>然后使用<br>sslocal -c /xxx/shadowsocks.json 启动</p>
-</blockquote>
-<p><a href="https://www.aliyun.com/jiaocheng/123836.html" title="Linux安装配置Shadowsocks客户端及开机自动启动 " target="_blank" rel="noopener">启动指令</a></p>
-<hr>
+<h2 id="阅读"><em>阅读</em></h2>
+<p><a href="https://zhuanlan.zhihu.com/p/32634593" target="_blank" rel="noopener">为什么会觉得时间序列模型比较难学</a></p>
 
           
         
@@ -854,106 +703,269 @@
           
             <p>[TOC]</p>
 <hr>
-<h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h2 id="桌面环境"><a href="#桌面环境" class="headerlink" title="桌面环境"></a>桌面环境</h2><p><a href="https://linux.cn/article-6441-1.html" title="亲手打造自己的 Linux 桌面环境 " target="_blank" rel="noopener">很全面的各种组件推荐</a></p>
-<h3 id="启动器"><a href="#启动器" class="headerlink" title="启动器"></a>启动器</h3><p>将启动器放在下面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings set com.canonical.Unity.Launcher launcher-position Bottom</span><br></pre></td></tr></table></figure></p>
-<h2 id="terminal"><a href="#terminal" class="headerlink" title="terminal"></a>terminal</h2><h3 id="终端工具"><a href="#终端工具" class="headerlink" title="终端工具"></a>终端工具</h3><ul>
+<h1 id="linux">linux</h1>
+<h2 id="桌面环境">桌面环境</h2>
+<p><a href="https://linux.cn/article-6441-1.html" title="亲手打造自己的 Linux 桌面环境" target="_blank" rel="noopener">很全面的各种组件推荐</a> ### 启动器 将启动器放在下面： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsettings set com.canonical.Unity.Launcher launcher-position Bottom</span><br></pre></td></tr></table></figure></p>
+<h2 id="terminal">terminal</h2>
+<h3 id="终端工具">终端工具</h3>
+<ul>
 <li>terminator ：<strong>分屏</strong>工具</li>
 <li>powerline ：vim 和 bash <strong>状态栏</strong>插件</li>
 <li>tmux : 终端<strong>复用</strong>工具</li>
 </ul>
-<h3 id="shell样式"><a href="#shell样式" class="headerlink" title="shell样式"></a>shell样式</h3><p>vim ~/.bashrc<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source ~/.git-completion.sh</span><br><span class="line">source ~/.git-prompt.sh</span><br><span class="line">export GIT_PS1_SHOWDIRTYSTATE=1</span><br><span class="line">export GIT_PS1_SHOWSTASHSTATE=1</span><br><span class="line">export GIT_PS1_SHOWUNTRACKEDFILES=1</span><br><span class="line">export GIT_PS1_SHOWUPSTREAM="verbose git svn"</span><br><span class="line">PS1='\[\033[1;35m\]\u@\h \[\033[1;32m\]\w\[\033[1;31m\]$(__git_ps1 " (%s)")\[\033[1;36m\] \n-&gt; \[\033[0m\]'</span><br></pre></td></tr></table></figure></p>
-<h1 id="window"><a href="#window" class="headerlink" title="window"></a>window</h1><h2 id="explorer"><a href="#explorer" class="headerlink" title="explorer"></a>explorer</h2><ul>
-<li><p>Clover 资源管理器增加标签页</p>
-</li>
-<li><h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2></li>
-</ul>
-<h3 id="鼠标指针"><a href="#鼠标指针" class="headerlink" title="鼠标指针"></a>鼠标指针</h3><p>百度云中</p>
-<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><p><a href="https://blog.csdn.net/fgf00/article/details/51893771" target="_blank" rel="noopener">docker 关键概念即常用指令</a><br><a href="https://blog.csdn.net/weixin_42665727/article/details/80996499" target="_blank" rel="noopener">win10 家庭版使用docker</a></p>
-<h3 id="kitematic"><a href="#kitematic" class="headerlink" title="kitematic"></a>kitematic</h3><p>docker 很好用的gui工具</p>
-<h2 id="DBeaver"><a href="#DBeaver" class="headerlink" title="DBeaver"></a>DBeaver</h2><p>数据库连接工具</p>
-<h2 id="win7-virgo"><a href="#win7-virgo" class="headerlink" title="win7 virgo"></a>win7 virgo</h2><p><a href="https://github.com/papplampe/virgo" target="_blank" rel="noopener">Git地址</a> </p>
+<h3 id="shell样式">shell样式</h3>
+<p>vim ~/.bashrc <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source ~/.git-completion.sh</span><br><span class="line">source ~/.git-prompt.sh</span><br><span class="line">export GIT_PS1_SHOWDIRTYSTATE=1</span><br><span class="line">export GIT_PS1_SHOWSTASHSTATE=1</span><br><span class="line">export GIT_PS1_SHOWUNTRACKEDFILES=1</span><br><span class="line">export GIT_PS1_SHOWUPSTREAM="verbose git svn"</span><br><span class="line">PS1='\[\033[1;35m\]\u@\h \[\033[1;32m\]\w\[\033[1;31m\]$(__git_ps1 " (%s)")\[\033[1;36m\] \n-&gt; \[\033[0m\]'</span><br></pre></td></tr></table></figure></p>
+<h1 id="window">window</h1>
+<h2 id="explorer">explorer</h2>
 <ul>
-<li>我的策略：<br>1 ： 综合页面，不需要专注的事情<br>偶数： 正事<br>奇数 ： 非正事</li>
+<li><p>Clover 资源管理器增加标签页</p></li>
+<li><h2 id="主题">主题</h2></li>
+</ul>
+<h3 id="鼠标指针">鼠标指针</h3>
+<p>百度云中</p>
+<h2 id="docker">docker</h2>
+<p><a href="https://blog.csdn.net/fgf00/article/details/51893771" target="_blank" rel="noopener">docker 关键概念即常用指令</a> <a href="https://blog.csdn.net/weixin_42665727/article/details/80996499" target="_blank" rel="noopener">win10 家庭版使用docker</a> ### kitematic docker 很好用的gui工具 ## DBeaver 数据库连接工具</p>
+<h2 id="win7-virgo">win7 virgo</h2>
+<p><a href="https://github.com/papplampe/virgo" target="_blank" rel="noopener">Git地址</a></p>
+<ul>
+<li>我的策略： 1 ： 综合页面，不需要专注的事情 偶数： 正事 奇数 ： 非正事</li>
 </ul>
 <blockquote>
-<p>Features:<br>resource friendly, exe is &lt;10kb on disk and uses <1mb 4 memory while running virtual desktops (more if you change a constant and recompile the code) shows only tray icon with number of desktop are on hotkeys: alt + 1..4 -> changes to desktop 1..4<br>    CTRL + 1..4            -&gt; moves active window to desktop 1..4<br>    ALT + CTRL + SHIFT + Q -&gt; exits the program<br>    ALT + CTRL + SHIFT + S -&gt; starts/stops handling of other hotkeys</1mb></p>
+<p>Features: resource friendly, exe is &lt;10kb on disk and uses &lt;1mb memory while running 4 virtual desktops (more if you change a constant and recompile the code) shows only a tray icon with the number of the desktop you are on Hotkeys: ALT + 1..4 -&gt; changes to desktop 1..4 CTRL + 1..4 -&gt; moves active window to desktop 1..4 ALT + CTRL + SHIFT + Q -&gt; exits the program ALT + CTRL + SHIFT + S -&gt; starts/stops handling of other hotkeys</p>
 </blockquote>
-<h2 id="任务栏监视工具"><a href="#任务栏监视工具" class="headerlink" title="任务栏监视工具"></a>任务栏监视工具</h2><ol>
+<h2 id="任务栏监视工具">任务栏监视工具</h2>
+<ol type="1">
 <li><a href="https://github.com/zhongyang219/TrafficMonitor/releases" target="_blank" rel="noopener">TrafficMonitor</a></li>
 <li>XMeters</li>
 </ol>
-<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><h2 id="仿真Terminal"><a href="#仿真Terminal" class="headerlink" title="仿真Terminal"></a>仿真Terminal</h2><h3 id="Termux"><a href="#Termux" class="headerlink" title="Termux"></a>Termux</h3><p><a href="https://www.jianshu.com/p/5c8678cef499" target="_blank" rel="noopener">安卓linux仿真Terminal–Termux</a><br><a href="https://f-droid.org/packages/com.termux/" target="_blank" rel="noopener">Termux官网</a><br><a href="https://www.jianshu.com/p/74fc2e8db834" target="_blank" rel="noopener">新手教程</a><br><a href="https://www.sqlsec.com/2018/05/termux.html#lg=1&amp;slide=6" target="_blank" rel="noopener">优化配置</a></p>
-<h1 id="others"><a href="#others" class="headerlink" title="others"></a>others</h1><h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><h3 id="idea-intellij"><a href="#idea-intellij" class="headerlink" title="idea intellij"></a>idea intellij</h3><h4 id="主题设置"><a href="#主题设置" class="headerlink" title="主题设置"></a>主题设置</h4><p><a href="http://www.riaway.com/theme.php" target="_blank" rel="noopener">主题网址</a><br>当前行高亮：caret row<br>匹配的括弧高亮： matched brace</p>
-<h4 id="File-Header"><a href="#File-Header" class="headerlink" title="File Header"></a>File Header</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* $&#123;NAME&#125;</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> AlexOne</span></span><br><span class="line"><span class="comment">* <span class="doctag">@date</span> $&#123;DATE&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<p>##anaconda</p>
-<h3 id="简要"><a href="#简要" class="headerlink" title="简要"></a>简要</h3><ol>
-<li>anaconda And conda<br><a href="https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/" target="_blank" rel="noopener">常见误区(英文)</a><br><a href="https://blog.csdn.net/qsir/article/details/79354734" target="_blank" rel="noopener">中文翻译</a></li>
+<h1 id="android">Android</h1>
+<h2 id="仿真terminal">仿真Terminal</h2>
+<h3 id="termux">Termux</h3>
+<p><a href="https://www.jianshu.com/p/5c8678cef499" target="_blank" rel="noopener">安卓linux仿真Terminal--Termux</a> <a href="https://f-droid.org/packages/com.termux/" target="_blank" rel="noopener">Termux官网</a> <a href="https://www.jianshu.com/p/74fc2e8db834" target="_blank" rel="noopener">新手教程</a> <a href="https://www.sqlsec.com/2018/05/termux.html#lg=1&amp;slide=6" target="_blank" rel="noopener">优化配置</a></p>
+<h1 id="others">others</h1>
+<h2 id="ide">IDE</h2>
+<h3 id="idea-intellij">idea intellij</h3>
+<h4 id="主题设置">主题设置</h4>
+<p><a href="http://www.riaway.com/theme.php" target="_blank" rel="noopener">主题网址</a> 当前行高亮：caret row 匹配的括弧高亮： matched brace #### File Header <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* $&#123;NAME&#125;</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@author</span> AlexOne</span></span><br><span class="line"><span class="comment">* <span class="doctag">@date</span> $&#123;DATE&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></p>
+<p>##anaconda ### 简要 1. anaconda And conda <a href="https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/" target="_blank" rel="noopener">常见误区(英文)</a> <a href="https://blog.csdn.net/qsir/article/details/79354734" target="_blank" rel="noopener">中文翻译</a> - anaconda: python的一个发行版本（即各种软件包的集合） - conda : 包管理软件和环境管理器 <a href="https://www.jianshu.com/p/17288627b994" target="_blank" rel="noopener">conda 的详细介绍</a> 2. conda and pip &gt; pip可以允许你在任何环境中安装python包，而conda允许你在conda环境中安装任何语言包（包括c语言或者python）</p>
+<ol start="3" type="1">
+<li>jupyter <strong>notebook</strong> 中添加conda新环境 &gt;python -m ipykernel install --user --name your_env_name --display-name your_env_name <a href="https://www.jianshu.com/p/08c20cd3a3ec" target="_blank" rel="noopener">jupyter notebook 添加 conda 环境</a></li>
 </ol>
-<ul>
-<li>anaconda: python的一个发行版本（即各种软件包的集合）</li>
-<li>conda : 包管理软件和环境管理器<br><a href="https://www.jianshu.com/p/17288627b994" target="_blank" rel="noopener">conda 的详细介绍</a></li>
-</ul>
-<ol start="2">
-<li><p>conda and pip</p>
+<h3 id="window-下安装">window 下安装</h3>
+<p><a href="https://www.jb51.net/article/137772.htm" target="_blank" rel="noopener">windows下Anaconda的安装与配置正解(Anaconda入门教程)</a></p>
+<h2 id="jdk">jdk</h2>
 <blockquote>
-<p>pip可以允许你在任何环境中安装python包，而conda允许你在conda环境中安装任何语言包（包括c语言或者python）</p>
+<p>1.官网下载JDK 2.解压缩,放到指定目录 3.配置环境变量 4.设置系统默认JDK - 测试jdk</p>
 </blockquote>
-</li>
-<li><p>jupyter <strong>notebook</strong> 中添加conda新环境</p>
-<blockquote>
-<p>python -m ipykernel install –user –name your_env_name –display-name your_env_name<br><a href="https://www.jianshu.com/p/08c20cd3a3ec" target="_blank" rel="noopener">jupyter notebook 添加 conda 环境</a></p>
-</blockquote>
-</li>
-</ol>
-<h3 id="window-下安装"><a href="#window-下安装" class="headerlink" title="window 下安装"></a>window 下安装</h3><p><a href="https://www.jb51.net/article/137772.htm" target="_blank" rel="noopener">windows下Anaconda的安装与配置正解(Anaconda入门教程) </a></p>
-<h2 id="jdk"><a href="#jdk" class="headerlink" title="jdk"></a>jdk</h2><blockquote>
-<p> 1.官网下载JDK<br>   2.解压缩,放到指定目录<br>   3.配置环境变量<br>   4.设置系统默认JDK</p>
-<ul>
-<li>测试jdk</li>
-</ul>
-</blockquote>
-<p> sudo vim ~/.bashrc,文件的末尾追加下面内容:</p>
+<p>sudo vim ~/.bashrc,文件的末尾追加下面内容:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">set</span> oracle jdk environment</span></span><br><span class="line">export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_60  ## 这里要注意目录要换成自己解压的jdk 目录</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre  </span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib  </span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
-<h2 id="mvn"><a href="#mvn" class="headerlink" title="mvn"></a>mvn</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">M2_HOME=/opt/maven/apache-maven-3.3.9</span><br><span class="line">CLASSPATH=$CLASSPATH:$M2_HOME/lib</span><br><span class="line">PATH=$PATH:$M2_HOME/bin</span><br><span class="line">export   PATH    CLASSPATH   M2_HOME</span><br></pre></td></tr></table></figure>
-<h2 id="explorer-plugins"><a href="#explorer-plugins" class="headerlink" title="explorer plugins"></a>explorer plugins</h2><ul>
-<li>SwitchyOmega 代理插件<br><a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">规则列表网址</a></li>
+<h2 id="mvn">mvn</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">M2_HOME=/opt/maven/apache-maven-3.3.9</span><br><span class="line">CLASSPATH=$CLASSPATH:$M2_HOME/lib</span><br><span class="line">PATH=$PATH:$M2_HOME/bin</span><br><span class="line">export   PATH    CLASSPATH   M2_HOME</span><br></pre></td></tr></table></figure>
+<h2 id="explorer-plugins">explorer plugins</h2>
+<ul>
+<li>SwitchyOmega 代理插件 <a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">规则列表网址</a></li>
 </ul>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置用户信息：<br><a href="https://git-scm.com/book/zh/v1/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git" target="_blank" rel="noopener">参考</a><br><a href="https://www.cnblogs.com/wntd/p/5888796.html" target="_blank" rel="noopener">别名参考</a></p>
+<h2 id="git">git</h2>
+<h3 id="配置">配置</h3>
+<p>配置用户信息： <a href="https://git-scm.com/book/zh/v1/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git" target="_blank" rel="noopener">参考</a> <a href="https://www.cnblogs.com/wntd/p/5888796.html" target="_blank" rel="noopener">别名参考</a> &gt; git config --global user.name "John Doe" git config --global user.email johndoe@example.com</p>
 <blockquote>
-<p> git config –global user.name “John Doe”<br> git config –global user.email <a href="mailto:johndoe@example.com" target="_blank" rel="noopener">johndoe@example.com</a></p>
+<p>git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"</p>
 </blockquote>
-<blockquote>
-<p>git config –global alias.lg “log –color –graph –pretty=format:’%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset’ –abbrev-commit”</p>
-</blockquote>
-<p>生成ssh key</p>
-<blockquote>
-<p>ssh-keygen -t rsa -C “<a href="mailto:your_email@youremail.com" target="_blank" rel="noopener">your_email@youremail.com</a>“</p>
-</blockquote>
-<h2 id="上网"><a href="#上网" class="headerlink" title="上网"></a>上网</h2><h3 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h3><p>[参见科学上网]（）</p>
-<h2 id="edit"><a href="#edit" class="headerlink" title="edit"></a>edit</h2><h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><ul>
+<p>生成ssh key &gt;ssh-keygen -t rsa -C "your_email@youremail.com" ## 上网 ### shadowsocks [参见科学上网]（）</p>
+<h2 id="edit">edit</h2>
+<h3 id="markdown">markdown</h3>
+<ul>
 <li>Typora</li>
 </ul>
-<h3 id="atom-编辑器"><a href="#atom-编辑器" class="headerlink" title="atom 编辑器"></a>atom 编辑器</h3><p><a href="http://wiki.jikexueyuan.com/project/atom/overview.html" target="_blank" rel="noopener">参考</a></p>
-<h3 id="visual-studio-code"><a href="#visual-studio-code" class="headerlink" title="visual studio code"></a>visual studio code</h3><p><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">官网</a></p>
-<h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><p><a href="https://www.cnblogs.com/ceshisanren/p/6343774.html" target="_blank" rel="noopener">Visual Studio Code搭建python开发环境</a><br><a href="https://cloud.tencent.com/developer/news/313349" target="_blank" rel="noopener">Anaconda＋VSCode搭建python开发环境</a></p>
-<h2 id="邮件"><a href="#邮件" class="headerlink" title="邮件"></a>邮件</h2><h3 id="thunderbird"><a href="#thunderbird" class="headerlink" title="thunderbird"></a>thunderbird</h3><h2 id="proxy"><a href="#proxy" class="headerlink" title="proxy"></a>proxy</h2><p><a href="https://zybuluo.com/mdeditor#1230233" target="_blank" rel="noopener">科学上网</a></p>
-<h2 id="notebook"><a href="#notebook" class="headerlink" title="notebook"></a>notebook</h2><p>docker 启动的notebook 更改密码后需要重启容器</p>
-<h3 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h3><blockquote>
-<p>安装<br>   pip install jupyter_nbextensions_configurator<br>    pip install jupyter_contrib_nbextensions<br>    启动：<br>    jupyter nbextensions_configurator enable –user<br>    jupyter contrib nbextension install –user<br>如果安装后找不到nbextensions这个标签，直接在端口后加/nbextensions访问</p>
-</blockquote>
-<h4 id="推荐插件"><a href="#推荐插件" class="headerlink" title="推荐插件"></a>推荐插件</h4><h5 id="tqdm"><a href="#tqdm" class="headerlink" title="tqdm"></a>tqdm</h5><p><img src="http://file.elecfans.com/web1/M00/4B/6F/o4YBAFqwyIqAf2l3AACD7D4sFiI123.gif" alt="tqdm_notebook"></p>
-<blockquote>
-<p>在迭代对象外侧，用tqdm_notebook函数包围即可。</p>
-</blockquote>
+<h3 id="atom-编辑器">atom 编辑器</h3>
+<p><a href="http://wiki.jikexueyuan.com/project/atom/overview.html" target="_blank" rel="noopener">参考</a></p>
+<h3 id="visual-studio-code">visual studio code</h3>
+<p><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">官网</a> #### python <a href="https://www.cnblogs.com/ceshisanren/p/6343774.html" target="_blank" rel="noopener">Visual Studio Code搭建python开发环境</a> <a href="https://cloud.tencent.com/developer/news/313349" target="_blank" rel="noopener">Anaconda＋VSCode搭建python开发环境</a></p>
+<h2 id="邮件">邮件</h2>
+<h3 id="thunderbird">thunderbird</h3>
+<h2 id="proxy">proxy</h2>
+<p><a href="https://zybuluo.com/mdeditor#1230233" target="_blank" rel="noopener">科学上网</a></p>
+<h2 id="notebook">notebook</h2>
+<p>docker 启动的notebook 更改密码后需要重启容器 ### 插件安装 &gt;安装<br>
+pip install jupyter_nbextensions_configurator pip install jupyter_contrib_nbextensions 启动：<br>
+jupyter nbextensions_configurator enable --user jupyter contrib nbextension install --user<br>
+如果安装后找不到nbextensions这个标签，直接在端口后加/nbextensions访问</p>
+<h4 id="推荐插件">推荐插件</h4>
+<h5 id="tqdm">tqdm</h5>
+<p><img src="http://file.elecfans.com/web1/M00/4B/6F/o4YBAFqwyIqAf2l3AACD7D4sFiI123.gif" alt="tqdm_notebook"> &gt;在迭代对象外侧，用tqdm_notebook函数包围即可。</p>
 <hr>
-<h2 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h2><ul>
-<li>去掉chrome新标签页上的推荐框<br>1.使用插件Stylish  (不知道是不是打开方式不对，没成功)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">插件Stylish</span><br><span class="line"></span><br><span class="line">[id=&quot;most-visited&quot;]&#123;display:none&#125;</span><br><span class="line"></span><br><span class="line">.*\/chrome\/newtab.*</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="chrome">chrome</h2>
+<ul>
+<li>去掉chrome新标签页上的推荐框 1.使用插件Stylish (不知道是不是打开方式不对，没成功) <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">插件Stylish</span><br><span class="line"></span><br><span class="line">[id=&quot;most-visited&quot;]&#123;display:none&#125;</span><br><span class="line"></span><br><span class="line">.*\/chrome\/newtab.*</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="性能监控插件"><a href="#性能监控插件" class="headerlink" title="性能监控插件"></a>性能监控插件</h2><p><a href="https://developer.ibm.com/articles/au-nmon_analyser/" target="_blank" rel="noopener">nmon</a></p>
-<ol start="2">
-<li>chrome://flags/#ntp-custom-links<br>Disable</li>
+<h2 id="性能监控插件">性能监控插件</h2>
+<p><a href="https://developer.ibm.com/articles/au-nmon_analyser/" target="_blank" rel="noopener">nmon</a></p>
+<ol start="2" type="1">
+<li>chrome://flags/#ntp-custom-links Disable</li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/科学上网/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neversn">
+      <meta itemprop="description" content="Never say never...">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neversn'Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/16/科学上网/" class="post-title-link" itemprop="url">科学上网</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-16 00:00:00 / 修改时间：20:50:26" itemprop="dateCreated datePublished" datetime="2019-07-16T00:00:00+08:00">2019-07-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/实践手札/" itemprop="url" rel="index"><span itemprop="name">实践手札</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>﻿# 科学上网</p>
+<p>标签（空格分隔）： 科学上网 proxy</p>
+<p>[TOC]</p>
 
           
         
@@ -1055,12 +1067,24 @@
                 
               
 
-              <time title="创建时间：2019-07-15 21:16:00 / 修改时间：22:36:56" itemprop="dateCreated datePublished" datetime="2019-07-15T21:16:00+08:00">2019-07-15</time>
+              <time title="创建时间：2019-07-15 21:16:00" itemprop="dateCreated datePublished" datetime="2019-07-15T21:16:00+08:00">2019-07-15</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-02 22:22:54" itemprop="dateModified" datetime="2019-12-02T22:22:54+08:00">2019-12-02</time>
               
             
           </span>
@@ -1114,13 +1138,17 @@
       
         
           
-            <h1 id="安卓仿真环境"><a href="#安卓仿真环境" class="headerlink" title="安卓仿真环境"></a>安卓仿真环境</h1><h2 id="仿linux终端——Termux"><a href="#仿linux终端——Termux" class="headerlink" title="仿linux终端——Termux"></a>仿linux终端——Termux</h2><p><a href="https://www.sqlsec.com/2018/05/termux.html" target="_blank" rel="noopener">较全的配置教程</a></p>
-<pre><code>- 切换国内源
-</code></pre><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> EDITOR＝vi</span><br><span class="line">apt edit-sources</span><br></pre></td></tr></table></figure>
-<p>－ 挂载外部储存<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">termux-setup-storage</span><br></pre></td></tr></table></figure></p>
-<h2 id="markdown编辑器"><a href="#markdown编辑器" class="headerlink" title="markdown编辑器"></a>markdown编辑器</h2><ol>
-<li>markdownX<br>不能指定文件编辑</li>
-<li>markdown手机版<br>来源于酷安，可以直接浏览文件<br>无法一边书写一边预览</li>
+            <h1 id="安卓仿真环境">安卓仿真环境</h1>
+<h2 id="仿linux终端termux">仿linux终端——Termux</h2>
+<p><a href="https://www.sqlsec.com/2018/05/termux.html" target="_blank" rel="noopener">较全的配置教程</a></p>
+<pre><code>- 切换国内源</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> EDITOR＝vi</span><br><span class="line">apt edit-sources</span><br></pre></td></tr></table></figure>
+<p>－ 挂载外部储存 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">termux-setup-storage</span><br></pre></td></tr></table></figure></p>
+<h2 id="markdown编辑器">markdown编辑器</h2>
+<ol type="1">
+<li>markdownX 不能指定文件编辑</li>
+<li>markdown手机版 来源于酷安，可以直接浏览文件<br>
+无法一边书写一边预览</li>
 </ol>
 
           
@@ -1289,11 +1317,13 @@
       
         
           
-            <h1 id="leetcode-环境准备"><a href="#leetcode-环境准备" class="headerlink" title="leetcode 环境准备"></a>leetcode 环境准备</h1><p>目标：使用vscode 进行leecode编码训练</p>
-<h2 id="安装-java-插件"><a href="#安装-java-插件" class="headerlink" title="安装 java 插件"></a>安装 java 插件</h2><p><a href="https://code.visualstudio.com/docs/java/java-tutorial" target="_blank" rel="noopener">官方java-tutorial</a></p>
+            <h1 id="leetcode-环境准备">leetcode 环境准备</h1>
+<p>目标：使用vscode 进行leecode编码训练</p>
+<h2 id="安装-java-插件">安装 java 插件</h2>
+<p><a href="https://code.visualstudio.com/docs/java/java-tutorial" target="_blank" rel="noopener">官方java-tutorial</a></p>
 <blockquote>
 <p>To help set up Java on VS Code, there is the Microsoft <a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack" target="_blank" rel="noopener">Java Extension Pack</a>, which contains these popular extensions:</p>
-<ol>
+<ol type="1">
 <li><a href="https://marketplace.visualstudio.com/items?itemName=redhat.java" target="_blank" rel="noopener">Language Support for Java(TM) by Red Hat</a></li>
 <li><a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug" target="_blank" rel="noopener">Debugger for Java</a></li>
 <li><a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test" target="_blank" rel="noopener">Java Test Runner</a></li>
@@ -1301,11 +1331,17 @@
 <li><a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency" target="_blank" rel="noopener">Java Dependency Viewer</a></li>
 </ol>
 </blockquote>
-<h2 id="LeetCode-插件"><a href="#LeetCode-插件" class="headerlink" title="LeetCode 插件"></a>LeetCode 插件</h2><p><a href="https://github.com/jdneo/vscode-leetcode/blob/master/docs/README_zh-CN.md" target="_blank" rel="noopener">vscode-leetcode介绍</a></p>
+<h2 id="leetcode-插件">LeetCode 插件</h2>
+<p><a href="https://github.com/jdneo/vscode-leetcode/blob/master/docs/README_zh-CN.md" target="_blank" rel="noopener">vscode-leetcode介绍</a></p>
 <p>安装插件后，侧边栏出现LeetCode图标,登陆后即可做题。</p>
-<p>​    <img src="/2019/05/19/leetcode-env/leetcode_opt.png" alt="leetcode_opt"></p>
-<p><img src="/2019/05/19/leetcode-env/twosum.png" alt="twosum"></p>
-<h2 id="使用效果"><a href="#使用效果" class="headerlink" title="使用效果"></a>使用效果</h2><p><img src="/2019/05/19/leetcode-env/example.png" alt="example"></p>
+<p>​ <img src="/2019/05/19/leetcode-env/leetcode_opt.png" alt="leetcode_opt"></p>
+<figure>
+<img src="/2019/05/19/leetcode-env/twosum.png" alt><figcaption>twosum</figcaption>
+</figure>
+<h2 id="使用效果">使用效果</h2>
+<figure>
+<img src="/2019/05/19/leetcode-env/example.png" alt><figcaption>example</figcaption>
+</figure>
 
           
         
@@ -1445,13 +1481,18 @@
         
           
             <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
           
@@ -1625,99 +1666,120 @@
       
         
           
-            <h1 id="blog搭建日记"><a href="#blog搭建日记" class="headerlink" title="blog搭建日记"></a>blog搭建日记</h1><h2 id="初步尝试"><a href="#初步尝试" class="headerlink" title="初步尝试"></a>初步尝试</h2><h3 id="gitpage-初步尝试"><a href="#gitpage-初步尝试" class="headerlink" title="gitpage 初步尝试"></a>gitpage 初步尝试</h3><p>参考： <a href="https://pages.github.com/" target="_blank" rel="noopener">gitpage官方介绍</a></p>
+            <h1 id="blog搭建日记">blog搭建日记</h1>
+<h2 id="初步尝试">初步尝试</h2>
+<h3 id="gitpage-初步尝试">gitpage 初步尝试</h3>
+<p>参考： <a href="https://pages.github.com/" target="_blank" rel="noopener">gitpage官方介绍</a></p>
 <p>个人理解，gitpage应该是github 提供的静态网页托管服务，他和git仓库的某个分支绑定，自动部署。</p>
 <ul>
-<li><p>创建username.github.io 为名的仓库</p>
-</li>
+<li><p>创建username.github.io 为名的仓库</p></li>
 <li><p>向master分支提交任意内容，此时，gitpage自动绑定好了，通过usename.github.io即可访问，访问效果如下：</p>
-<p><img src="/2019/05/14/build_blog_diary/1557755944810.png" alt="1557755944810"></p>
-</li>
+<figure>
+<img src="/2019/05/14/build_blog_diary/1557755944810.png" alt><figcaption>1557755944810</figcaption>
+</figure></li>
 </ul>
-<h4 id="notice"><a href="#notice" class="headerlink" title="notice"></a>notice</h4><ul>
+<h4 id="notice">notice</h4>
+<ul>
 <li>关于gh-pages分支。个人主页只能绑定master分支，项目主页才可绑定在gh-pages分支上。<a href="https://stackoverflow.com/questions/25559292/github-page-shows-master-branch-not-gh-pages" target="_blank" rel="noopener">Github page shows master branch, not gh-pages</a></li>
 </ul>
-<h3 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h3><blockquote>
+<h3 id="hexo">hexo</h3>
+<blockquote>
 <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 <a href="http://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
 </blockquote>
 <p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">中文社区</a></p>
-<h4 id="notice-1"><a href="#notice-1" class="headerlink" title="notice:"></a>notice:</h4><ul>
+<h4 id="notice-1">notice:</h4>
+<ul>
 <li>需要执行hexo deploy 前， 需要配置_config.yml 中的deploy项。</li>
 </ul>
-<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p>按着教程按部就班，使得<a href="https://neversn.github.io/" target="_blank" rel="noopener">个人主页</a>可以访问了。</p>
-<p><img src="/2019/05/14/build_blog_diary/1557759138571.png" alt="1557759138571"></p>
-<h2 id="更改主题并新建博文"><a href="#更改主题并新建博文" class="headerlink" title="更改主题并新建博文"></a>更改主题并新建博文</h2><h3 id="更换主题：nexT"><a href="#更换主题：nexT" class="headerlink" title="更换主题：nexT"></a>更换主题：nexT</h3><p><a href="https://theme-next.org/docs/getting-started/" target="_blank" rel="noopener">NexT User Docs – Starting to Use</a></p>
+<h3 id="成果">成果</h3>
+<p>按着教程按部就班，使得<a href="https://neversn.github.io/" target="_blank" rel="noopener">个人主页</a>可以访问了。</p>
+<figure>
+<img src="/2019/05/14/build_blog_diary/1557759138571.png" alt><figcaption>1557759138571</figcaption>
+</figure>
+<h2 id="更改主题并新建博文">更改主题并新建博文</h2>
+<h3 id="更换主题next">更换主题：nexT</h3>
+<p><a href="https://theme-next.org/docs/getting-started/" target="_blank" rel="noopener">NexT User Docs – Starting to Use</a></p>
 <ul>
-<li>更改language:  后， 重启生效</li>
+<li>更改language: 后， 重启生效</li>
 </ul>
-<h3 id="新建post（博文）"><a href="#新建post（博文）" class="headerlink" title="新建post（博文）"></a>新建post（博文）</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post title</span><br></pre></td></tr></table></figure>
+<h3 id="新建post博文">新建post（博文）</h3>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post title</span><br></pre></td></tr></table></figure>
 <p>本质上是在hexo/source/_post/ 目录下创建了一个 *.md 文件， 文件中包含scaffolds中模板信息，如下，在此基础上继续编辑即可：</p>
-<p><img src="/2019/05/14/build_blog_diary/scaffold.png" alt="scaffold"></p>
+<figure>
+<img src="/2019/05/14/build_blog_diary/scaffold.png" alt><figcaption>scaffold</figcaption>
+</figure>
 <ul>
 <li>引用文件通过相对目录引用</li>
 <li><a href="https://www.jianshu.com/p/cf0628478a4e" target="_blank" rel="noopener">hexo博客添加图片</a> : 通过使用 hexo-asset-image插件实现mardowm文章内图片链接在生成静态页面时的映射</li>
 </ul>
-<h3 id="成果-1"><a href="#成果-1" class="headerlink" title="成果"></a>成果</h3><p><img src="/2019/05/14/build_blog_diary/1557835573394.png" alt="1557835573394"></p>
-<h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
+<h3 id="成果-1">成果</h3>
+<p><img src="/2019/05/14/build_blog_diary/1557835573394.png" alt="1557835573394"> ### 遗留问题</p>
+<ul>
 <li>无法访问图片</li>
 </ul>
-<h2 id="图片无法显示问题"><a href="#图片无法显示问题" class="headerlink" title="图片无法显示问题"></a>图片无法显示问题</h2><h3 id="博客中图片无法显示问题"><a href="#博客中图片无法显示问题" class="headerlink" title="博客中图片无法显示问题"></a>博客中图片无法显示问题</h3><ul>
+<h2 id="图片无法显示问题">图片无法显示问题</h2>
+<h3 id="博客中图片无法显示问题">博客中图片无法显示问题</h3>
+<ul>
 <li><p>原因：生成静态页面目录与实际文件目录不一致。</p>
-<p>图片访问地址为： </p>
+<p>图片访问地址为：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src=<span class="string">"/2019/05/14/build_blog_diary/**2019-05-14-build_blog_diary**/1557755944810.png"</span></span><br></pre></td></tr></table></figure>
 <p>实际目录中文件路径为：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public\2019\05\14\build_blog_diary\1557755944810.png</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public\2019\05\14\build_blog_diary\1557755944810.png</span><br></pre></td></tr></table></figure></li>
 <li><p>解决</p>
 <p>引用时直接引用文件名，省略标题同名目录。</p>
-<p>如文章名叫 title , 图片A 在 ./title/A.png， 此时应用时因输入 ![A desc](A.png) 而不是 ![./title/A desc](A.png)</p>
-</li>
+<p>如文章名叫 title , 图片A 在 ./title/A.png， 此时应用时因输入 ![A desc](A.png) 而不是 ![./title/A desc](A.png)</p></li>
 </ul>
-<h3 id="遗留问题-1"><a href="#遗留问题-1" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
+<h3 id="遗留问题">遗留问题</h3>
+<ul>
 <li>上述问题解决后，本地编辑器无法很好地预览图片。</li>
 </ul>
-<h2 id="更换插件-hexo-asset-image"><a href="#更换插件-hexo-asset-image" class="headerlink" title="更换插件 hexo-asset-image"></a>更换插件 hexo-asset-image</h2><h3 id="hexo-asset-image-插件-本地-静态页面-插画图片统一问题"><a href="#hexo-asset-image-插件-本地-静态页面-插画图片统一问题" class="headerlink" title="hexo-asset-image 插件 本地 静态页面 插画图片统一问题"></a>hexo-asset-image 插件 本地 静态页面 插画图片统一问题</h3><ul>
+<h2 id="更换插件-hexo-asset-image">更换插件 hexo-asset-image</h2>
+<h3 id="hexo-asset-image-插件-本地-静态页面-插画图片统一问题">hexo-asset-image 插件 本地 静态页面 插画图片统一问题</h3>
+<ul>
 <li><p>分析Day 3遗留问题，查看最新<a href="https://github.com/xcodebuild/hexo-asset-image/blob/master/index.js" target="_blank" rel="noopener">hexo-asset-image插件源码</a>:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">			  <span class="keyword">var</span> srcArray = src.split(<span class="string">'/'</span>).filter(<span class="function"><span class="keyword">function</span>(<span class="params">elem</span>)</span>&#123;</span><br><span class="line">				<span class="keyword">return</span> elem != <span class="string">''</span> &amp;&amp; elem != <span class="string">'.'</span>;</span><br><span class="line">			  &#125;);</span><br><span class="line">			  <span class="keyword">if</span>(srcArray.length &gt; <span class="number">1</span>)</span><br><span class="line">				srcArray.shift();</span><br><span class="line">			  src = srcArray.join(<span class="string">'/'</span>);</span><br><span class="line">			  $(<span class="keyword">this</span>).attr(<span class="string">'src'</span>, config.root + link + src);</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
-<p>发现，插件将原文章中图片引用链接移除了第一个/ 及之前的内容。故相对路径引用<strong>不应</strong>使用 [](./title/A.png) 而<strong>应该</strong>使用  [](tiltle/A.png)</p>
-</li>
+<p>发现，插件将原文章中图片引用链接移除了第一个/ 及之前的内容。故相对路径引用<strong>不应</strong>使用 [](./title/A.png) 而<strong>应该</strong>使用 [](tiltle/A.png)</p></li>
 <li><p>直接安装的hexo-asset-image插件不对，使用github上<a href="https://github.com/xcodebuild" target="_blank" rel="noopener">xcodebuild</a>的。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-asset-image</span><br><span class="line">npm install https://github.com/xcodebuild/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-asset-image</span><br><span class="line">npm install https://github.com/xcodebuild/hexo-asset-image --save</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="增加标签页和分类页"><a href="#增加标签页和分类页" class="headerlink" title="增加标签页和分类页"></a>增加标签页和分类页</h3><p><a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="noopener">详细教程</a></p>
-<ol>
+<h3 id="增加标签页和分类页">增加标签页和分类页</h3>
+<p><a href="http://theme-next.iissnan.com/theme-settings.html" target="_blank" rel="noopener">详细教程</a></p>
+<ol type="1">
 <li><p>查看hexo/theme/next/layout 目录内容,可以看到，其已经内置多种页面布局：</p>
-<p><img src="/2019/05/14/build_blog_diary/next_layout.png" alt="next_layout"></p>
-</li>
+<figure>
+<img src="/2019/05/14/build_blog_diary/next_layout.png" alt><figcaption>next_layout</figcaption>
+</figure></li>
 <li><p>新建分类页标签页</p>
-<ol>
-<li><p>执行以下命令后, source 目录下就会多source/categories/<br>source/tags/两个目录，但此时页面菜单中上未多出新的选项</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
-</li>
+<ol type="1">
+<li><p>执行以下命令后, source 目录下就会多source/categories/ source/tags/两个目录，但此时页面菜单中上未多出新的选项</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
 <li><p>将 hexo_root/theme/next/_config.yml 中menu选项对应注释去除，注释去除后，刚建立的页面显示出来了,但此时，标签页和分类页中啥都没有。</p>
-<p><img src="/2019/05/14/build_blog_diary/theme_menu_config.png" alt="theme_menu_conf"></p>
-<p><img src="/2019/05/14/build_blog_diary/new_menu.png" alt="new_menu"></p>
-</li>
+<figure>
+<img src="/2019/05/14/build_blog_diary/theme_menu_config.png" alt><figcaption>theme_menu_conf</figcaption>
+</figure>
+<figure>
+<img src="/2019/05/14/build_blog_diary/new_menu.png" alt><figcaption>new_menu</figcaption>
+</figure></li>
 <li><p>编辑hexo_root/source/categories/index.md 和 hexo_root/source/tags/index.md，加上type描述，此时标签页和分类页生效。</p>
-<p><img src="/2019/05/14/build_blog_diary/categories_index_md.png" alt="categories_index_md"></p>
-</li>
-<li><p>以后的所有md文章，在文件开头加上Front-matter即可正确分类和打标签。<a href="https://hexo.io/zh-cn/docs/front-matter.html#%E5%88%86%E7%B1%BB%E5%92%8C%E6%A0%87%E7%AD%BE" target="_blank" rel="noopener">Front-matter格式说明</a></p>
-</li>
+<figure>
+<img src="/2019/05/14/build_blog_diary/categories_index_md.png" alt><figcaption>categories_index_md</figcaption>
+</figure></li>
+<li><p>以后的所有md文章，在文件开头加上Front-matter即可正确分类和打标签。<a href="https://hexo.io/zh-cn/docs/front-matter.html#%E5%88%86%E7%B1%BB%E5%92%8C%E6%A0%87%E7%AD%BE" target="_blank" rel="noopener">Front-matter格式说明</a></p></li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h3 id="notice-2"><a href="#notice-2" class="headerlink" title="notice"></a>notice</h3><ul>
-<li><p>注意引用文件后缀大小写，Typora中大小写不敏感，静态页面中大小写敏感</p>
-</li>
+<h3 id="notice-2">notice</h3>
+<ul>
+<li><p>注意引用文件后缀大小写，Typora中大小写不敏感，静态页面中大小写敏感</p></li>
 <li><p>由于window和mac文件系统对文件大小写不敏感，因此git默认也是不敏感的，如果要制定git大小写敏感，需要执行：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config core.ignorecase <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config core.ignorecase <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
 <li><p>hexo deploy 部署时也会往github上提交东西，在window环境下，也是文件名大小写不敏感，只改变文件名时不会当成change push到仓库的，此时需要更改 hexo_root/.deploy_git/.git/config 中的 ignorecase 选项。</p>
-<p><img src="/2019/05/14/build_blog_diary/hexo_git_config.png" alt="hexo_git_config"></p>
-</li>
+<figure>
+<img src="/2019/05/14/build_blog_diary/hexo_git_config.png" alt><figcaption>hexo_git_config</figcaption>
+</figure></li>
 </ul>
-<h2 id="laTex-语法支持"><a href="#laTex-语法支持" class="headerlink" title="laTex 语法支持"></a>laTex 语法支持</h2><h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><hr>
+<h2 id="latex-语法支持">laTex 语法支持</h2>
+<h2 id="绑定域名">绑定域名</h2>
+<hr>
 <p><strong><em>参考资料</em></strong></p>
 <hr>
 
@@ -2072,6 +2134,69 @@
   
 
   
+  
+
+  
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
 
   
 
