@@ -183,6 +183,24 @@ hexo new post title
 
 ## laTex 语法支持
 
+1. 将默认渲染引擎卸载 然后安装hexo-renderer-pandoc
+
+2. 将next主题中的math配置设置好，如下, **per_page** 设置为false, 不然需要在文章头添加  mathjax: true 才会渲染公式
+
+   ```yml
+   math:
+     enable: true
+   
+     # Default (true) will load mathjax / katex script on demand.
+     # That is it only render those page which has `mathjax: true` in Front-matter.
+     # If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.
+     per_page: false
+   
+     engine: mathjax
+     #engine: katex
+   ```
+
+
 ## 绑定域名
 
 
