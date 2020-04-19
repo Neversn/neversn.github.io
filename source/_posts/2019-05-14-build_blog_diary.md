@@ -8,7 +8,8 @@ tags:
 - hexo 
 - nexT
 categories: 
-- 实践手札 
+- Env
+- hexo
 ---
 
 # blog搭建日记

@@ -6,7 +6,7 @@ tags:
 - env
 - vscode
 categories:
-- 编码修炼
+- coding
 - leetcode
 
 ---
