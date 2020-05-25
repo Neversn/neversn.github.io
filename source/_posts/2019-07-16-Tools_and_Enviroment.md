@@ -67,7 +67,11 @@ linux 仿生终端
 [新手教程](https://www.jianshu.com/p/74fc2e8db834)
 [优化配置](https://www.sqlsec.com/2018/05/termux.html#lg=1&slide=6)
 
+## spacedesk
 
+将电脑屏幕投影到平板手机
+
+[spacedesk](https://spacedesk.net/)
 
 # Dev
 ## idea intellij
@@ -171,3 +175,4 @@ export   PATH    CLASSPATH   M2_HOME
 ## Typora
 
 超级好用的markdown编辑器
+
