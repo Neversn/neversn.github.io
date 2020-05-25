@@ -73,6 +73,8 @@ linux 仿生终端
 
 [spacedesk](https://spacedesk.net/)
 
+
+
 # Dev
 ## idea intellij
 [我的配置策略即备份文件](https://github.com/Neversn/OneConfig/tree/master/Intellij)
